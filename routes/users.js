@@ -5,5 +5,6 @@ const router = express.Router();
 
 // GET /feed/posts
 router.get("/users", usersController.getUser);
-
+router.post("/newuser", usersController.newUser);
+router.post("/login", usersController.logIn);
 module.exports = router;
