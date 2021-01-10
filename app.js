@@ -4,19 +4,23 @@ const port = 4000;
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
-
 const cors = require("cors");
-cookieParser = require("cookie-parser");
 const dotenv = require("dotenv").config();
+const cookieParser = require("cookie-parser");
 
 //Passport Imports
 const passport = require("passport");
-const FacebookStrategy = require("passport-facebook").Strategy;
 // --END passport
 
 //Cors,Body parses Imports
 //DATABASE Setting for Session
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN, // <-- location of the react app were connecting to
+    credentials: true,
+  })
+);
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(bodyParser.json());
 const db = require("./db");
 const sessionConfig = {
@@ -25,46 +29,43 @@ const sessionConfig = {
     tableName: "session",
   }),
   name: "mysession",
-  secret: "asdfq",
+  secret: process.env.COOKIE_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7,
+    // maxAge: 15000,
     aameSite: true,
     secure: false, // ENABLE ONLY ON HTTPS
   },
 };
 
 app.use(session(sessionConfig));
-// SESSION DATABASE
+app.use(passport.initialize());
+app.use(passport.session());
+// ========== end
 
-// Import PassportConfig
-require("./routes/passportConfig")(app, passport, FacebookStrategy);
-const flowersRoute = require("./routes/flowers");
-app.use("/flowers", flowersRoute);
-app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.user, "user"); //req user comes from passport
-  console.log(req.isAuthenticated(), "funki");
-  next();
-});
 //Routes Imports
 const usersRoute = require("./routes/users");
 
 app.use("/users", usersRoute);
-
-app.get("/putka", (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.status(401).send("no premissin");
+app.get("/getcookie", (req, res) => {
+  if (req.isAuthenticated()) {
+    res
+      .writeHead(200, {
+        "Set-Cookie": "token=encryptedstring;",
+        "Access-Control-Allow-Credentials": "true",
+      })
+      .send();
   } else {
-    res.send("dsdsadas");
+    console.log("notin");
   }
 });
+
 app.get("/", (req, res) => {
-  console.log(req.user, "ghomemememe");
   res.send("Hello World!");
 });
-//--End routes
+//-========End routes
 
 // SERVER
 app.listen(port, () => {

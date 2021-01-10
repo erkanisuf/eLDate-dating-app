@@ -15,8 +15,8 @@ module.exports = function (app, passport, FacebookStrategy) {
       {
         clientID: process.env.FB_CLIENTID,
         clientSecret: process.env.FACEBOOK_CLIENTSECRET,
-        callbackURL: "/auth/facebook/callback",
-        profileFields: ["id", "displayName", "email"],
+        callbackURL: "/users/auth/facebook/callback",
+        profileFields: ["id", "displayName", "email", "birthday"],
       },
       async function (accessToken, refreshToken, profile, cb) {
         console.log(profile);
@@ -51,21 +51,5 @@ module.exports = function (app, passport, FacebookStrategy) {
         }
       }
     )
-  );
-
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.get(
-    "/auth/facebook",
-    passport.authenticate("facebook", { scope: "email" })
-  );
-
-  app.get(
-    "/auth/facebook/callback",
-    passport.authenticate("facebook", { failureRedirect: "/login" }),
-    function (req, res) {
-      // Successful authentication, redirect home.
-      res.redirect("/");
-    }
   );
 };

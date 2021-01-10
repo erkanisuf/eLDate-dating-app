@@ -2,18 +2,26 @@ const pool = require("../db");
 // Database
 
 module.exports = class User {
-  constructor(username, password, email, typereg_id) {
+  constructor(username, password, email, typereg_id, age) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.typereg_id = typereg_id;
+    this.age = age;
   }
-
   save() {
-    return pool.query(
-      "INSERT INTO userstable(username,password,email,created_on,typereg_id)VALUES($1,$2,$3,CURRENT_TIMESTAMP,$4) RETURNING user_id ",
-      [this.username, this.password, this.email, this.typereg_id]
+    pool.query(
+      `WITH ins1 AS(INSERT INTO userstable(username,password,email,created_on,typereg_id)
+    VALUES($1,$2,$3,CURRENT_TIMESTAMP,$4)
+   RETURNING user_id)
+      INSERT INTO profile (userlog_id, age)
+      SELECT user_id, $5 FROM ins1`,
+      [this.username, this.password, this.email, this.typereg_id, this.age]
     );
+    // return pool.query(
+    //   "INSERT INTO userstable(username,password,email,created_on,typereg_id)VALUES($1,$2,$3,CURRENT_TIMESTAMP,$4) RETURNING user_id ",
+    //   [this.username, this.password, this.email, this.typereg_id]
+    // );
   }
 
   saveByFacebook() {
