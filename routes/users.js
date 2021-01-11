@@ -1,6 +1,9 @@
 const express = require("express");
 const usersController = require("../controllers/usersController");
 const router = express.Router();
+const { validationResult } = require("express-validator");
+const isLogedin = require("../middleware/isLogedin");
+const validator = require("../middleware/validator");
 //IMPORTS
 
 const passport = require("passport");
@@ -10,18 +13,19 @@ const LocalStrategy = require("passport-local").Strategy;
 // import passports
 require("./facebook")(router, passport, FacebookStrategy);
 require("./passportLocal")(passport, LocalStrategy);
+
 //end-----
-router.post("/newuser", usersController.newUser);
+
+//newuser
+router.post("/newuser", validator.createUser, usersController.newUser);
+//--end
 
 //Local Strat
-// router.post(
-//   "/login",
-//   passport.authenticate("local", { failureRedirect: "/login" }),
-//   function (req, res) {
-//     res.redirect("http://localhost:3000");
-//   }
-// );
-router.post("/login", function (req, res, next) {
+router.post("/login", validator.logIn, function (req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
   passport.authenticate(
     "local",
     { failureFlash: true },
@@ -68,6 +72,15 @@ router.get("/logout", (req, res, next) => {
     res.send("logetout");
   });
 });
-router.get("/profile", usersController.Profile);
-//end-facebook
+//----end-facebook
+
+//Gets User Profile
+router.get("/getuser", isLogedin, usersController.getUser);
+router.put(
+  "/updateprofile",
+  isLogedin,
+  validator.updateProfileValidator,
+  usersController.editProfile
+);
+//---end
 module.exports = router;

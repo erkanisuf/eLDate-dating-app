@@ -1,5 +1,6 @@
 const User = require("../models/usersModel");
 const bcrypt = require("bcrypt");
+
 module.exports = function (passport, LocalStrategy) {
   passport.serializeUser((user, cb) => {
     cb(null, user);

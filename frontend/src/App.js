@@ -3,8 +3,10 @@ import "./App.css";
 import Cookies from "js-cookie";
 import Axios from "axios";
 import RegistrationForm from "./components/user/RegistrationForm ";
+import EditProfile from "./components/user/EditProfile";
 function App() {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [data, setData] = useState(null);
   const faceboookLogin = () => {
     window.location = "http://localhost:4000/users/auth/facebook";
   };
@@ -32,8 +34,9 @@ function App() {
         Cookies.set("logedin", res.data.success);
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data.message);
+        // console.log(error.response.status); // 401
+        // console.log(error.response.data.message);
+        console.log(error.response.data);
         Cookies.remove("logedin");
       });
   };
@@ -67,7 +70,20 @@ function App() {
       url: "http://localhost:4000/users/logout",
     }).then((res) => console.log(res));
   };
-  console.log(Cookies.get("token"));
+
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+
+      withCredentials: true,
+      url: "http://localhost:4000/users/getuser",
+    })
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <div className="App">
       <button onClick={faceboookLogin}>Facebook login</button>
@@ -96,6 +112,7 @@ function App() {
         <input type="submit" value="Submit" />
       </form>
       <RegistrationForm />
+      <EditProfile />
     </div>
   );
 }

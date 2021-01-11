@@ -18,17 +18,6 @@ module.exports = class User {
       SELECT user_id, $5 FROM ins1`,
       [this.username, this.password, this.email, this.typereg_id, this.age]
     );
-    // return pool.query(
-    //   "INSERT INTO userstable(username,password,email,created_on,typereg_id)VALUES($1,$2,$3,CURRENT_TIMESTAMP,$4) RETURNING user_id ",
-    //   [this.username, this.password, this.email, this.typereg_id]
-    // );
-  }
-
-  saveByFacebook() {
-    return pool.query(
-      "INSERT INTO userstable(username,password,email,created_on)VALUES($1,$2,$3,CURRENT_TIMESTAMP)",
-      [this.username, this.password, this.email]
-    );
   }
 
   static findByEmail(email) {
@@ -36,5 +25,44 @@ module.exports = class User {
   }
   static findByID(id) {
     return pool.query("SELECT * FROM userstable WHERE user_id=$1", [id]);
+  }
+
+  static findProfile(id) {
+    return pool.query("SELECT * FROM profile WHERE userlog_id=$1", [id]);
+  }
+  static editProfile(
+    fullname,
+    nickname,
+    description,
+    sex,
+    relationship,
+    searching,
+    height,
+    weight,
+    city,
+    country,
+    age,
+    id
+  ) {
+    return pool.query(
+      `UPDATE profile
+    SET fullname = $1 ,nickname=$2,description=$3,sex=$4,relationship=$5,searching=$6,height=$7,weight=$8,city=$9,country=$10,age=$11
+    WHERE userlog_id = $12
+    `,
+      [
+        fullname,
+        nickname,
+        description,
+        sex,
+        relationship,
+        searching,
+        height,
+        weight,
+        city,
+        country,
+        age,
+        id,
+      ]
+    );
   }
 };
