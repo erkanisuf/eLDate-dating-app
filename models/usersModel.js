@@ -10,12 +10,13 @@ module.exports = class User {
     this.age = age;
   }
   save() {
-    pool.query(
+    return pool.query(
       `WITH ins1 AS(INSERT INTO userstable(username,password,email,created_on,typereg_id)
     VALUES($1,$2,$3,CURRENT_TIMESTAMP,$4)
    RETURNING user_id)
       INSERT INTO profile (userlog_id, age)
-      SELECT user_id, $5 FROM ins1`,
+      SELECT user_id, $5 FROM ins1
+      RETURNING *`,
       [this.username, this.password, this.email, this.typereg_id, this.age]
     );
   }
