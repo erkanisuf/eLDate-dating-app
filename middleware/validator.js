@@ -64,4 +64,10 @@ exports.updateProfileValidator = [
   }),
   check("age").custom(checkAge),
 ];
+
+exports.checkChatMessage = [
+  check("text")
+    .isLength({ min: 1 })
+    .withMessage("You cant send empty Messages!"),
+];
 //--end

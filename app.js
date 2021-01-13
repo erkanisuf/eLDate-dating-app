@@ -47,20 +47,25 @@ app.use(passport.session());
 
 //Routes Imports
 const usersRoute = require("./routes/users");
+const profilesRoute = require("./routes/profiles");
+const chatRoute = require("./routes/chat");
 
 app.use("/users", usersRoute);
-app.get("/getcookie", (req, res) => {
-  if (req.isAuthenticated()) {
-    res
-      .writeHead(200, {
-        "Set-Cookie": "token=encryptedstring;",
-        "Access-Control-Allow-Credentials": "true",
-      })
-      .send();
-  } else {
-    console.log("notin");
-  }
-});
+app.use("/profiles", profilesRoute);
+app.use("/chat", chatRoute);
+// app.get("/getcookie", (req, res) => {
+
+//   if (req.isAuthenticated()) {
+//     res
+//       .writeHead(200, {
+//         "Set-Cookie": "token=encryptedstring;",
+//         "Access-Control-Allow-Credentials": "true",
+//       })
+//       .send();
+//   } else {
+//     console.log("notin");
+//   }
+// });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

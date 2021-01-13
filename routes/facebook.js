@@ -7,7 +7,6 @@ module.exports = function (app, passport, FacebookStrategy) {
   });
 
   passport.deserializeUser(async (user, cb) => {
-    console.log(user, "vitu");
     try {
       const finduser = await User.findByID(user);
       cb(null, finduser.rows[0].user_id);

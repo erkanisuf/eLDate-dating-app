@@ -1,6 +1,6 @@
-import React from "react";
-
-const chat = () => {
+import React, { useState } from "react";
+import Axios from "axios";
+const Chat = ({ sendTo }) => {
   const [form, setForm] = useState({
     text: "",
   });
@@ -12,13 +12,13 @@ const chat = () => {
     event.preventDefault();
 
     Axios({
-      method: "PUT",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: {
         text: form.text,
       },
       withCredentials: true,
-      url: "http://localhost:4000/users/updateprofile",
+      url: `http://localhost:4000/chat/startconversation/${sendTo}`,
     })
       .then((res) => {
         console.log(res);
@@ -46,4 +46,4 @@ const chat = () => {
   );
 };
 
-export default chat;
+export default Chat;
