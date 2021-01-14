@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Axios from "axios";
+// THIS COMPONENTS STARTS THE CONVERSATIONS ONLY !!!
 const Chat = ({ sendTo }) => {
   const [form, setForm] = useState({
     text: "",

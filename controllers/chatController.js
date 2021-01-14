@@ -1,7 +1,7 @@
 const pool = require("../db");
 const User = require("../models/usersModel");
 const { validationResult } = require("express-validator");
-
+const _ = require("lodash");
 //
 // select conversation_id
 //     group by conversation_id
@@ -14,6 +14,7 @@ exports.newChat = async (req, res) => {
   }
   const id = Number(req.params.id); //ID From CLIENT user_id not the profile ID
   const text = req.body.text;
+
   if (id === req.user) {
     return res.status(422).json({ message: "Cant message yourself!" });
   }
@@ -80,12 +81,55 @@ exports.getMyConversations = async (req, res) => {
     const mapItems = findConversations.rows.map((el) => el.conversation_id);
 
     const resultofChats = await pool.query(
-      `SELECT * FROM participants
+      `	SELECT
+      participants.id,
+    participants.conversation_id,
+    
+    user_id,fullname,age
+  FROM
+    participants
+  INNER JOIN profile
+      ON profile.userlog_id = participants.user_id
+    
         WHERE conversation_id= ANY($1::int[])`,
       [mapItems]
-    ); //This finds all conversation ID with the maped ids
-    console.log(resultofChats.rows);
-    return res.json(findConversations.rows);
+    ); //This finds all conversation ID with the maped ids,THE QUERY inner joins so i can get users profile and his image
+
+    let showConversations = _.remove(resultofChats.rows, function (n) {
+      return n.user_id !== req.user;
+    });
+
+    const mapforProfiles = showConversations.map((el) => el.user_id); //This Finds the Users Profiles That i have chatted with
+    const findProfile = await pool.query(
+      `SELECT * FROM profile
+        WHERE userlog_id= ANY($1::int[])`,
+      [mapforProfiles]
+    );
+
+    return res.json(showConversations);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.getMyChat = async (req, res) => {
+  const id = Number(req.params.id);
+  console.log(id);
+
+  try {
+    const getAllmessagesofTHisChat = await pool.query(
+      `SELECT *  FROM messages
+      WHERE conversation_id=$1`,
+      [id]
+    );
+    if (
+      getAllmessagesofTHisChat.rows[0].sender_id != req.user &&
+      getAllmessagesofTHisChat.rows[0].received_by != req.user
+    ) {
+      return res.status(422).json({ message: "This message is not For you !" });
+    }
+
+    res.json(getAllmessagesofTHisChat.rows);
   } catch (err) {
     console.log(err);
   }

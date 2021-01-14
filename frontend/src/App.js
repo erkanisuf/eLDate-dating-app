@@ -5,6 +5,7 @@ import Main from "./Main";
 import AllProfiles from "./components/profiles/AllProfiles";
 import { Switch, Route, Link } from "react-router-dom";
 import SingleProfile from "./components/profiles/SingleProfile";
+import MyMessages from "./components/messages/MyMessages";
 function App() {
   const counter = useSelector((state) => state.mainreducer);
   const isLogedin = useSelector((state) => state.isLogedin);
@@ -37,6 +38,9 @@ function App() {
         </Route>
         <Route path="/allprofiles">
           <AllProfiles />
+        </Route>
+        <Route path="/mymessages">
+          <MyMessages />
         </Route>
 
         <Route path="/"></Route>

@@ -20,4 +20,11 @@ router.get(
   chatController.getMyConversations
 );
 
+router.get(
+  "/getmessages/:id",
+  isLogedin,
+
+  chatController.getMyChat
+);
+
 module.exports = router;
