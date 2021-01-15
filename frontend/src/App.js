@@ -9,7 +9,7 @@ import MyMessages from "./components/messages/MyMessages";
 function App() {
   const counter = useSelector((state) => state.mainreducer);
   const isLogedin = useSelector((state) => state.isLogedin);
-  console.log(isLogedin);
+
   const dispatch = useDispatch();
   return (
     <div className="App">

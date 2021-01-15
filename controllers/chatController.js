@@ -54,7 +54,8 @@ exports.newChat = async (req, res) => {
     } else {
       const sendOnlyMessage = await pool.query(
         `INSERT INTO messages(conversation_id,participant_id,sender_id,message,created_at,received_by)
-        VALUES ($1, $2, $3,$4, CURRENT_TIMESTAMP,$5);`,
+        VALUES ($1, $2, $3,$4, CURRENT_TIMESTAMP,$5)
+        RETURNING *`,
         [
           dupeConversation.rows[0].conversation_id,
           dupeConversation.rows[0].id,
@@ -63,9 +64,8 @@ exports.newChat = async (req, res) => {
           id,
         ]
       );
+      res.json({ message: "message send!", data: sendOnlyMessage.rows });
     }
-
-    res.json({ message: "message send!" });
   } catch (err) {
     console.log(err);
   }
@@ -112,9 +112,10 @@ exports.getMyConversations = async (req, res) => {
   }
 };
 
+// TUKA OT POOLA MISLQ CHE NQMA SAMISAAAL PEEERAAS
 exports.getMyChat = async (req, res) => {
   const id = Number(req.params.id);
-  console.log(id);
+  console.log(id, "FROM BACK END");
 
   try {
     const getAllmessagesofTHisChat = await pool.query(
@@ -124,7 +125,8 @@ exports.getMyChat = async (req, res) => {
     );
     if (
       getAllmessagesofTHisChat.rows[0].sender_id != req.user &&
-      getAllmessagesofTHisChat.rows[0].received_by != req.user
+      getAllmessagesofTHisChat.rows[0].received_by != req.user &&
+      getAllmessagesofTHisChat.rows[0].conversation_id != id
     ) {
       return res.status(422).json({ message: "This message is not For you !" });
     }

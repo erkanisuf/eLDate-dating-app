@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import GetInsideMessages from "./GetInsideMessages";
-import Chat from "./Chat";
-
+import { useDispatch } from "react-redux";
 const MyMessages = ({ sendTo }) => {
   const [mymessages, setMyMessages] = useState([]);
-  const inputEl = useRef(1);
-  console.log(inputEl);
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(null);
-  const handleOpen = (event) => {
-    setOpen(event);
+  const handleOpen = (id) => {
+    dispatch({ type: "CHANGE_CONVERSATION_ID", action: id });
+    console.log(id, "this))))");
+    setOpen(id);
   };
   console.log(open);
   useEffect(() => {
@@ -35,18 +35,18 @@ const MyMessages = ({ sendTo }) => {
     return <h1> Loading...</h1>;
   }
   return (
-    <div>
+    <div className="mymessages" style={{ position: "relative" }}>
       <h1>My MEssages</h1>
 
       {mymessages.map((el, index) => {
         return (
-          <div key={index}>
+          <div key={index} className="childOFmymessages">
             <p>{el.conversation_id}</p>
             <p>{el.fullname}</p>
 
             <GetInsideMessages
-              handleOpen={() => handleOpen(index)}
-              open={open === index ? true : false}
+              handleOpen={() => handleOpen(el.conversation_id)}
+              open={open === el.conversation_id ? true : false}
               conversationID={el.conversation_id}
               sendTo={el.user_id}
             />
