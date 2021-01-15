@@ -58,19 +58,18 @@ const chatRoute = require("./routes/chat");
 app.use("/users", usersRoute);
 app.use("/profiles", profilesRoute);
 app.use("/chat", chatRoute);
-// app.get("/getcookie", (req, res) => {
-
-//   if (req.isAuthenticated()) {
-//     res
-//       .writeHead(200, {
-//         "Set-Cookie": "token=encryptedstring;",
-//         "Access-Control-Allow-Credentials": "true",
-//       })
-//       .send();
-//   } else {
-//     console.log("notin");
-//   }
-// });
+app.get("/getcookie", (req, res) => {
+  if (req.isAuthenticated()) {
+    res
+      .writeHead(200, {
+        "Set-Cookie": "token=" + req.user,
+        "Access-Control-Allow-Credentials": "true",
+      })
+      .send();
+  } else {
+    res.json({ message: "not logged in" });
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

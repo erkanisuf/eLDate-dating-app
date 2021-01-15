@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
+import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import Main from "./Main";
 import AllProfiles from "./components/profiles/AllProfiles";
@@ -9,8 +10,24 @@ import MyMessages from "./components/messages/MyMessages";
 function App() {
   const counter = useSelector((state) => state.mainreducer);
   const isLogedin = useSelector((state) => state.isLogedin);
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+
+      withCredentials: true,
+      url: `http://localhost:4000/getcookie`,
+    })
+      .then((res) => {
+        console.log(res, "tokenshit");
+      })
+      .catch((error) => {
+        console.log(error.response.status); // 401
+        console.log(error.response.data);
+      });
+  });
   return (
     <div className="App">
       <h1>Redux</h1>

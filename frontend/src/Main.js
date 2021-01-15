@@ -6,7 +6,7 @@ import RegistrationForm from "./components/user/RegistrationForm ";
 import EditProfile from "./components/user/EditProfile";
 function Main() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [data, setData] = useState(null);
+
   const faceboookLogin = () => {
     window.location = "http://localhost:4000/users/auth/facebook";
   };
