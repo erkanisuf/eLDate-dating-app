@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
 import GetInsideMessages from "./GetInsideMessages";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "antd/dist/antd.css";
 //ANT DESIGN
 import { Tabs } from "antd";
@@ -11,19 +11,20 @@ import { Avatar } from "antd";
 const MyMessages = () => {
   const { TabPane } = Tabs; //ANT
 
-  const [mymessages, setMyMessages] = useState([]);
-  const dispatch = useDispatch();
+  // const [mymessages, setMyMessages] = useState([]);
+  const dispatch = useDispatch(); //Redux
+  const mymessages = useSelector((state) => state.myConversations); // Redux Selector
+  const openID = useSelector((state) => state.conversationReducer);
 
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(Number(openID));
   const handleOpen = useCallback(
     (id) => {
-      dispatch({ type: "CHANGE_CONVERSATION_ID", action: id });
+      dispatch({ type: "CHANGE_CONVERSATION_ID", action: Number(id) });
 
       setOpen(Number(id));
     },
     [dispatch]
   );
-  console.log(open, "openn");
 
   useEffect(() => {
     Axios({
@@ -35,42 +36,51 @@ const MyMessages = () => {
     })
       .then((res) => {
         console.log(res);
-        setMyMessages(res.data);
-        handleOpen(res.data[0].conversation_id);
+        // setMyMessages(res.data);
+        dispatch({ type: "FETCH_MY_CONVERSATIONS", action: res.data });
+        // handleOpen(res.data[0].conversation_id);
       })
       .catch((error) => {
         console.log(error.response.status); // 401
         console.log(error.response.data);
       });
-  }, [handleOpen]);
+  }, [handleOpen, dispatch]);
 
   if (!mymessages.length) {
     return <h1> Loading...</h1>;
   }
   return (
     <div style={{ width: "60%", margin: "0 auto" }}>
+      <button
+        onClick={() => dispatch({ type: "CHANGE_CONVERSATION_ID", action: 14 })}
+      ></button>
       <Tabs
         onChange={handleOpen}
-        defaultActiveKey="1"
+        defaultActiveKey={`${openID}`}
         tabPosition={"left"}
         style={{
           margin: "0 auto",
           width: "80%",
-          height: "100%",
+          height: "800px",
         }}
       >
         {mymessages.map((el, index) => {
           return (
             <TabPane
               tab={
-                <div>
+                <div
+                  style={{
+                    width: "250px",
+                  }}
+                >
                   <Avatar
                     size={75}
                     style={{
                       margin: "5px",
+
                       borderRadius: "100%",
                       border:
-                        open === el.conversation_id
+                        openID === el.conversation_id
                           ? "5px solid #003a8c"
                           : "none",
                     }}
@@ -95,7 +105,7 @@ const MyMessages = () => {
             >
               <GetInsideMessages
                 open={true}
-                conversationID={el.conversation_id}
+                conversationID={openID}
                 sendTo={el.user_id}
               />
             </TabPane>

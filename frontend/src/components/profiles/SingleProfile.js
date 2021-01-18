@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Axios from "axios";
 import Chat from "../messages/Chat";
 import "antd/dist/antd.css";
 import "./SingleProfile.css";
 import moment from "moment";
+import { usenullOrEmpty } from "../../CustomHook/chekifNull";
+import { useDispatch } from "react-redux";
 //ANT
-import { Descriptions, Divider, Image, Badge } from "antd";
+import { Descriptions, Image, Badge, Modal, Button } from "antd";
 import { ManOutlined, WomanOutlined } from "@ant-design/icons";
 //
 const SingleProfile = () => {
-  const params = useParams();
+  const [isModalVisible, setIsModalVisible] = useState(false); // ANT MODAL toggle
+  const dispatch = useDispatch(); // Redux
+  const history = useHistory(); // Router
+  const params = useParams(); //Router
   const [profile, setProfile] = useState([]);
   useEffect(() => {
     Axios({
@@ -28,7 +33,33 @@ const SingleProfile = () => {
         console.log(err);
       });
   }, [params.id]);
-  console.log(profile, "profzjjjjjjjjjjjj");
+  console.log(profile, "SingleProfile");
+
+  const tryStartConversation = (profile) => {
+    // dispatch({
+    //   type: "PUSH_TO_MY_CONVERSATIONS_NODB",
+    //   action: {
+    //     fullname: profile[0].fullname,
+    //     user_id: profile[0].userlog_id,
+    //     images: profile[0].images,
+    //     conversation_id: 696969,
+    //   },
+    // });
+
+    history.push("/mymessages");
+  };
+  // ANT MODAL
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   if (!profile.length) return <h1>Loading...</h1>;
   else
     return (
@@ -45,7 +76,7 @@ const SingleProfile = () => {
             alignItems: "flex-start",
           }}
         >
-          <Image width={500} src={profile[0].images[0]} />
+          <Image width={500} src={usenullOrEmpty(profile[0].images[0])} />
           <div>
             <Image.PreviewGroup>
               <Image
@@ -62,35 +93,23 @@ const SingleProfile = () => {
         {/* /*                        END IMAGE */}
         {/* /*                         DESCRIPTIONS */}
         <div className="descriptions">
-          {/* <Chat sendTo={profile[0].userlog_id} /> */}
-          {/* <p type="vertical" style={{ color: "red" }}>
-            {profile[0].fullname}
-          </p>
-
-          <p type="vertical" style={{ color: "red" }}>
-            {profile[0].nickname}
-          </p>
-
-          <p type="vertical" style={{ color: "red" }}>
-            {profile[0].city}
-          </p> */}
           <Descriptions title="Profile Info" layout="vertical" bordered>
             <Descriptions.Item label="Nickname">
-              {profile[0].nickname}
+              {usenullOrEmpty(profile[0].nickname)}
             </Descriptions.Item>
             <Descriptions.Item label="Name">
-              {profile[0].fullname}
+              {usenullOrEmpty(profile[0].fullname)}
             </Descriptions.Item>
             <Descriptions.Item label="Age">
               {moment(profile[0].age, "YYYYMMDD").fromNow(true)}
             </Descriptions.Item>
 
             <Descriptions.Item label="City" span={2}>
-              {profile[0].city}
+              {usenullOrEmpty(profile[0].city)}
             </Descriptions.Item>
 
             <Descriptions.Item label="Country">
-              {profile[0].country}
+              {usenullOrEmpty(profile[0].country)}
             </Descriptions.Item>
 
             <Descriptions.Item label="Genre">
@@ -100,7 +119,7 @@ const SingleProfile = () => {
                 </span>
               ) : profile[0].sex === "Woman" ? (
                 <span>
-                  <ManOutlined /> Woman
+                  <WomanOutlined /> Woman
                 </span>
               ) : (
                 "Other"
@@ -108,11 +127,11 @@ const SingleProfile = () => {
             </Descriptions.Item>
 
             <Descriptions.Item label="Weight">
-              {profile[0].weight}
+              {usenullOrEmpty(profile[0].weight)}
             </Descriptions.Item>
 
             <Descriptions.Item label="Height">
-              {profile[0].height}
+              {usenullOrEmpty(profile[0].height)}
             </Descriptions.Item>
 
             <Descriptions.Item label="Interested in" span={3}>
@@ -126,6 +145,17 @@ const SingleProfile = () => {
             </Descriptions.Item>
           </Descriptions>
         </div>
+        <Button type="primary" onClick={showModal}>
+          Open Modal
+        </Button>
+        <Modal
+          title="Basic Modal"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <Chat sendTo={profile[0].userlog_id} />
+        </Modal>
         {/* /*                       END  DESCRIPTIONS */}
       </div>
     );

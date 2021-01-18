@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { usenullOrEmpty } from "../../CustomHook/chekifNull";
 //ANT DESIGN
 import { Avatar, Card } from "antd";
 const AllProfiles = () => {
@@ -24,15 +25,6 @@ const AllProfiles = () => {
       });
   }, []);
 
-  const nullOrEmpty = (param) => {
-    if (param === null) {
-      return "Unknown";
-    } else if (param === "") {
-      return "Unknown";
-    } else {
-      return param;
-    }
-  };
   return (
     <div
       style={{
@@ -72,8 +64,8 @@ const AllProfiles = () => {
                 }
               >
                 <Meta
-                  title={nullOrEmpty(el.nickname)}
-                  description={nullOrEmpty(el.city)}
+                  title={usenullOrEmpty(el.nickname)}
+                  description={usenullOrEmpty(el.city)}
                 />
               </Card>
             </Link>

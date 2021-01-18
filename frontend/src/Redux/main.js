@@ -1,11 +1,11 @@
-import counterReducer from "./reducer";
+import myConversations from "./myConversations";
 import logInReducer from "./logInReducer";
 import conversationReducer from "./conversationReducer";
 import myProfileReducer from "./myProfileReducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  mainreducer: counterReducer,
+  myConversations: myConversations,
   isLogedin: logInReducer,
   conversationReducer: conversationReducer,
   myProfileReducer: myProfileReducer,

@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Main from "./Main";
 import AllProfiles from "./components/profiles/AllProfiles";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import SingleProfile from "./components/profiles/SingleProfile";
 import MyMessages from "./components/messages/MyMessages";
 
 function App() {
-  const counter = useSelector((state) => state.mainreducer);
-  const isLogedin = useSelector((state) => state.isLogedin);
   const dispatch = useDispatch();
 
+  //Gives me Token with my ID
   useEffect(() => {
     Axios({
       method: "GET",
@@ -29,6 +28,7 @@ function App() {
         console.log(error.response.data);
       });
   });
+  ///Gives me my Profile Stats
   useEffect(() => {
     Axios({
       method: "GET",
@@ -49,24 +49,27 @@ function App() {
         console.log(error.response.data);
       });
   });
+  //Gets my COnversations
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+
+      withCredentials: true,
+      url: `http://localhost:4000/chat/getmyconversations`,
+    })
+      .then((res) => {
+        console.log(res);
+        // setMyMessages(res.data);
+        dispatch({ type: "FETCH_MY_CONVERSATIONS", action: res.data });
+      })
+      .catch((error) => {
+        console.log(error.response.status); // 401
+        console.log(error.response.data);
+      });
+  }, [dispatch]);
   return (
     <div className="App">
-      <h1>Redux</h1>
-      <Link to="/allprofiles">ThiS IS TO ALL PROFILEs</Link>
-      <p>
-        this is {counter} and not {isLogedin.name}
-      </p>
-      <p>age {isLogedin.age && isLogedin.age}</p>
-      <button onClick={() => dispatch({ type: "DECREMENT", action: 5 })}>
-        Change IT biTch
-      </button>
-      <button
-        onClick={() =>
-          dispatch({ type: "CHANGE_NAME", data: { name: "erko", age: "25" } })
-        }
-      >
-        nam
-      </button>
       <Switch>
         <Route path="/main">
           <Main />

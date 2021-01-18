@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Axios from "axios";
-import { useSelector } from "react-redux";
+import { useLocation, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 //ANT DESING
 import { Input, Button } from "antd";
 //
 //  COMPONENTS TO START CONVERSATION ALSO USE DIN THE CHAT !
 const Chat = ({ sendTo }) => {
+  const dispatch = useDispatch(); //REDUX
+  const params = useLocation(); //Router
+  const history = useHistory();
   const conversationIDREDUX = useSelector((state) => state.conversationReducer);
   const myprofileImage = useSelector((state) => state.myProfileReducer);
   const [form, setForm] = useState({
@@ -30,10 +34,19 @@ const Chat = ({ sendTo }) => {
       .then((res) => {
         console.log(res);
         realTime(res.data.data[0]);
+
+        if (params.pathname.includes("/allprofiles/")) {
+          dispatch({
+            type: "CHANGE_CONVERSATION_ID",
+            action: Number(res.data.data[0].conversation_id),
+          });
+          history.push("/mymessages");
+        }
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        // console.log(error.response.status); // 401
+        // console.log(error.response.data);
+        console.log(error);
       });
   };
 
@@ -43,7 +56,9 @@ const Chat = ({ sendTo }) => {
       headers: { "Content-Type": "application/json" },
       data: {
         message: event.message,
-        conversationID: conversationIDREDUX,
+        conversationID: params.pathname.includes("/allprofiles/")
+          ? event.conversation_id
+          : conversationIDREDUX,
         chatimage:
           myprofileImage.images !== null
             ? myprofileImage.images[0]
