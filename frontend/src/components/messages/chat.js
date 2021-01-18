@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+//ANT DESING
+import { Input, Button } from "antd";
+//
 //  COMPONENTS TO START CONVERSATION ALSO USE DIN THE CHAT !
 const Chat = ({ sendTo }) => {
   const conversationIDREDUX = useSelector((state) => state.conversationReducer);
+  const myprofileImage = useSelector((state) => state.myProfileReducer);
   const [form, setForm] = useState({
     text: "",
   });
@@ -12,6 +16,7 @@ const Chat = ({ sendTo }) => {
   };
 
   const handleSubmit = (event) => {
+    setForm({ text: "" });
     event.preventDefault();
     Axios({
       method: "POST",
@@ -39,6 +44,11 @@ const Chat = ({ sendTo }) => {
       data: {
         message: event.message,
         conversationID: conversationIDREDUX,
+        chatimage:
+          myprofileImage.images !== null
+            ? myprofileImage.images[0]
+            : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png",
+        fullname: myprofileImage.fullname,
       },
 
       withCredentials: true,
@@ -56,16 +66,22 @@ const Chat = ({ sendTo }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
-          text
-          <input
-            type="text"
-            name="text"
-            value={form.fullname}
-            onChange={handleChange}
-          />
-        </label>
-        <input type="submit" value="Submit" />
+        <Input
+          style={{ width: "80%" }}
+          placeholder="Write a message"
+          type="text"
+          name="text"
+          value={form.text}
+          onChange={handleChange}
+        />
+        <Button
+          disabled={form.text === "" ? true : false}
+          type="primary"
+          onClick={handleSubmit}
+        >
+          Send
+        </Button>
+        {/* <input type="submit" value="Submit" /> */}
       </form>
     </div>
   );

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import "antd/dist/antd.css";
 //ANT DESIGN
 import { Tabs } from "antd";
+import { Avatar } from "antd";
 
 //
 const MyMessages = () => {
@@ -53,33 +54,44 @@ const MyMessages = () => {
         defaultActiveKey="1"
         tabPosition={"left"}
         style={{
+          margin: "0 auto",
+          width: "80%",
           height: "100%",
-          backgroundColor: "green",
         }}
       >
         {mymessages.map((el, index) => {
           return (
             <TabPane
               tab={
-                <div
-                  style={{
-                    backgroundColor:
-                      open === el.conversation_id ? "blue" : "red",
-                    width: "160px",
-                  }}
-                >
-                  <img
-                    src="https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
-                    alt="avatar"
-                    width="150px"
+                <div>
+                  <Avatar
+                    size={75}
+                    style={{
+                      margin: "5px",
+                      borderRadius: "100%",
+                      border:
+                        open === el.conversation_id
+                          ? "5px solid #003a8c"
+                          : "none",
+                    }}
+                    icon={
+                      <img
+                        src={
+                          el.images !== null
+                            ? el.images[0]
+                            : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
+                        }
+                        alt="avatar"
+                        width="150px"
+                      />
+                    }
                   />
+                  <p>{el.fullname}</p>
                 </div>
               }
-              //   tab={`<p>${el.conversation_id}</p>
-              // <p>${el.fullname}</p>`}
               key={el.conversation_id}
               disabled={index === 28}
-              style={{ backgroundColor: "red", height: "800px" }}
+              style={{ height: "800px" }}
             >
               <GetInsideMessages
                 open={true}

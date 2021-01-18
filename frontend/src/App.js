@@ -7,6 +7,7 @@ import AllProfiles from "./components/profiles/AllProfiles";
 import { Switch, Route, Link } from "react-router-dom";
 import SingleProfile from "./components/profiles/SingleProfile";
 import MyMessages from "./components/messages/MyMessages";
+
 function App() {
   const counter = useSelector((state) => state.mainreducer);
   const isLogedin = useSelector((state) => state.isLogedin);
@@ -21,7 +22,27 @@ function App() {
       url: `http://localhost:4000/getcookie`,
     })
       .then((res) => {
-        console.log(res, "tokenshit");
+        //This sets token cookie with id
+      })
+      .catch((error) => {
+        console.log(error.response.status); // 401
+        console.log(error.response.data);
+      });
+  });
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+
+      withCredentials: true,
+      url: `http://localhost:4000/users/getuser`,
+    })
+      .then((res) => {
+        console.log(res, "MYPROFILE?");
+        dispatch({
+          type: "FETCH_MY_PROFILE",
+          action: res.data.profile,
+        });
       })
       .catch((error) => {
         console.log(error.response.status); // 401

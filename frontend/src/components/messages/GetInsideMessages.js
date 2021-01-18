@@ -3,9 +3,14 @@ import Axios from "axios";
 import Pusher from "pusher-js";
 import Chat from "./Chat";
 import Cookies from "js-cookie";
+import "antd/dist/antd.css";
+import moment from "moment";
+//ANT DESIGN
+import { Avatar } from "antd";
+//
+
 const GetInsideMessages = ({ conversationID, sendTo, open, handleOpen }) => {
   const getcookie = Number(Cookies.get("token"));
-  console.log(getcookie, "ggggggggggggqqqqqqqq");
 
   const [SendMessages, setSendMessages] = useState([]);
   const messagesEndRef = useRef(null);
@@ -68,20 +73,83 @@ const GetInsideMessages = ({ conversationID, sendTo, open, handleOpen }) => {
           height: "750px",
           maxHeight: "800px",
           overflowY: "scroll",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <h1>messages of inside chat component</h1>
-        <button onClick={() => handleOpen}>Close Chat</button>
         {SendMessages.map((el, index) => {
           return (
-            <div key={index} style={{ backgroundColor: "green" }}>
-              <p
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                width: "100%",
+                alignSelf:
+                  el.sender_id === getcookie ? "flex-start" : "flex-end",
+
+                flexDirection: "column",
+              }}
+            >
+              <div
                 style={{
-                  textAlign: el.sender_id === getcookie ? "left" : "right",
+                  width: "100%",
+                  margin: "0 auto",
+                  color: "grey",
+                  fontStyle: "italic",
+                  alignSelf: "center",
+                  justifySelf: "center",
                 }}
               >
+                {moment(el.created_at).startOf("mm").fromNow()}
+              </div>
+              <p
+                style={{
+                  margin: "0",
+                  color: "grey",
+                  fontStyle: "italic",
+                  alignSelf:
+                    el.sender_id === getcookie ? "flex-start" : "flex-end",
+                }}
+              >
+                {el.fullname}
+              </p>
+              <p
+                style={{
+                  position: "relative",
+                  width: "25%",
+                  margin: "5px",
+                  padding: "15px",
+                  borderRadius: "10px",
+                  alignSelf:
+                    el.sender_id === getcookie ? "flex-start" : "flex-end",
+                  backgroundColor:
+                    el.sender_id === getcookie ? "#595959" : "#003a8c",
+
+                  color: "white",
+                }}
+              >
+                <Avatar
+                  size={25}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: -3,
+                    border: "1px solid white",
+                  }}
+                  icon={
+                    <img
+                      src={
+                        el.images !== null
+                          ? el.images
+                          : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
+                      }
+                      // src="https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
+                      alt="avatar"
+                      width="150px"
+                    />
+                  }
+                />
                 {el.message}
-                <span style={{ color: "white" }}>{el.sender_id}</span>
               </p>
             </div>
           );

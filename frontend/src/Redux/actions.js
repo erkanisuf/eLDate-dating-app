@@ -16,3 +16,11 @@ export const changeConversationID = (action, state) => {
 };
 //--end
 // Functions to reducers!
+
+//My Profile Fetching Update
+
+export const updateMyProfileState = (action, state) => {
+  console.log(action, "action");
+
+  return action.action;
+};
