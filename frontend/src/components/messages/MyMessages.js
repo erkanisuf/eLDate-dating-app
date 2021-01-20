@@ -56,7 +56,9 @@ const MyMessages = () => {
       ></button>
       <Tabs
         onChange={handleOpen}
-        defaultActiveKey={`${openID}`}
+        defaultActiveKey={
+          openID === null ? mymessages[0].conversation_id : `${openID}`
+        }
         tabPosition={"left"}
         style={{
           margin: "0 auto",
@@ -107,6 +109,7 @@ const MyMessages = () => {
                 open={true}
                 conversationID={openID}
                 sendTo={el.user_id}
+                mymessages={mymessages}
               />
             </TabPane>
           );

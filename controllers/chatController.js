@@ -48,9 +48,15 @@ exports.newChat = async (req, res) => {
          SELECT conversation_id,(SELECT participants_id FROM ins2),$1,$2, CURRENT_TIMESTAMP,$3 FROM ins1
             RETURNING received_by AS backtoparticipant)
             INSERT INTO participants (conversation_id, user_id)
-            SELECT conversation_id ,(SELECT backtoparticipant FROM ins3) FROM ins1`,
+            SELECT conversation_id ,(SELECT backtoparticipant FROM ins3) FROM ins1
+            RETURNING *`,
         [req.user, text, id]
       );
+
+      return res.json({
+        message: "message send!",
+        data: startConversation.rows,
+      });
     } else {
       const sendOnlyMessage = await pool.query(
         `INSERT INTO messages(conversation_id,participant_id,sender_id,message,created_at,received_by)
@@ -85,7 +91,7 @@ exports.getMyConversations = async (req, res) => {
       participants.id,
     participants.conversation_id,
     
-    user_id,fullname,age
+    user_id,fullname,age,images
   FROM
     participants
   INNER JOIN profile
@@ -119,10 +125,22 @@ exports.getMyChat = async (req, res) => {
 
   try {
     const getAllmessagesofTHisChat = await pool.query(
-      `SELECT *  FROM messages
+      `SELECT conversation_id,created_at,sender_id,message,fullname,images  FROM messages 
+      INNER JOIN profile
+      ON profile.userlog_id = messages.sender_id
       WHERE conversation_id=$1`,
       [id]
     );
+    // const getAllmessagesofTHisChat = await pool.query(
+    //   `SELECT conversation_id,message,created_at ,receiver.fullname AS receiverName,receiver.images AS receiverImage,
+    //   sender.fullname AS senderFullname , sender.images AS senderImage  FROM messages
+    //   INNER JOIN profile  AS receiver
+    //   ON receiver.userlog_id = messages.received_by
+    //   INNER JOIN profile  AS sender
+    //   ON sender.userlog_id = messages.sender_id
+    //   WHERE conversation_id =$1`,
+    //   [id]
+    // );
     if (
       getAllmessagesofTHisChat.rows[0].sender_id != req.user &&
       getAllmessagesofTHisChat.rows[0].received_by != req.user &&

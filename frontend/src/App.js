@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./App.css";
+
 import Axios from "axios";
 import { useDispatch } from "react-redux";
 import Main from "./Main";
@@ -7,6 +7,7 @@ import AllProfiles from "./components/profiles/AllProfiles";
 import { Switch, Route } from "react-router-dom";
 import SingleProfile from "./components/profiles/SingleProfile";
 import MyMessages from "./components/messages/MyMessages";
+import Layout from "./Layout/Layout";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,23 +70,25 @@ function App() {
       });
   }, [dispatch]);
   return (
-    <div className="App">
-      <Switch>
-        <Route path="/main">
-          <Main />
-        </Route>
-        <Route path="/allprofiles/:id">
-          <SingleProfile />
-        </Route>
-        <Route path="/allprofiles">
-          <AllProfiles />
-        </Route>
-        <Route path="/mymessages">
-          <MyMessages />
-        </Route>
-
-        <Route path="/"></Route>
-      </Switch>
+    <div>
+      <Layout>
+        <Switch>
+          <Route path="/main">
+            <Main />
+          </Route>
+          <Route path="/allprofiles/:id">
+            <SingleProfile />
+          </Route>
+          <Route path="/allprofiles">
+            <AllProfiles />
+          </Route>
+          <Route path="/mymessages">
+            <MyMessages />
+          </Route>
+          <Route path="/"></Route>
+          {/* Router */}
+        </Switch>
+      </Layout>
     </div>
   );
 }

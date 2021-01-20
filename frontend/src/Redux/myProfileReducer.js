@@ -13,6 +13,7 @@ const myprofile = {
   city: "",
   country: "",
   age: "",
+  images: [],
 };
 const myProfileReducer = (state = myprofile, action) => {
   switch (action.type) {

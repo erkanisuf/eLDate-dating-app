@@ -9,7 +9,13 @@ import moment from "moment";
 import { Avatar } from "antd";
 //
 
-const GetInsideMessages = ({ conversationID, sendTo, open, handleOpen }) => {
+const GetInsideMessages = ({
+  conversationID,
+  sendTo,
+  open,
+  handleOpen,
+  mymessages,
+}) => {
   const getcookie = Number(Cookies.get("token"));
   console.log("FUFU", conversationID);
   const [SendMessages, setSendMessages] = useState([]);
@@ -48,7 +54,9 @@ const GetInsideMessages = ({ conversationID, sendTo, open, handleOpen }) => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/chat/getmessages/${conversationID}`,
+      url: `http://localhost:4000/chat/getmessages/${
+        conversationID === null ? mymessages[0].conversation_id : conversationID
+      }`,
     })
       .then((res) => {
         console.log(res);
@@ -58,7 +66,7 @@ const GetInsideMessages = ({ conversationID, sendTo, open, handleOpen }) => {
         console.log(error.response.status); // 401
         console.log(error.response.data);
       });
-  }, [conversationID, open]);
+  }, [conversationID, open, mymessages]);
 
   if (!SendMessages.length) {
     return <h1> Loading...</h1>;

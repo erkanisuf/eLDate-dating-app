@@ -28,11 +28,13 @@ const AllProfiles = () => {
   return (
     <div
       style={{
-        border: "1px solid black",
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "flex-start",
+        justifyContent: "center",
+        maxHeight: "80vh",
+        margin: "0 auto",
+        overflowY: "scroll",
       }}
     >
       {allprofiles.map((el, index) => {
@@ -41,22 +43,18 @@ const AllProfiles = () => {
             key={index}
             style={{
               margin: "5px",
-              position: "relative",
-              "&:hover": {
-                transoform: "scale(2)",
-              },
             }}
           >
             <Link to={`/allprofiles/${el.profile_id}`}>
               <Card
                 hoverable
-                style={{ width: 240, padding: "15px" }}
+                style={{ width: 200, padding: "15px" }}
                 cover={
                   <Avatar
                     style={{ border: "1px solid #003a8c" }}
-                    size={200}
+                    size={180}
                     src={
-                      el.images !== null
+                      el.images.length
                         ? el.images[0]
                         : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
                     }

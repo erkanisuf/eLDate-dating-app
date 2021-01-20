@@ -50,10 +50,11 @@ exports.getUser = async (req, res) => {
     weight,
     city,
     country,
+    images,
   } = userFind.rows[0];
 
   res.json({
-    data: {
+    profile: {
       fullname: fullname,
       nickname: nickname,
       description: description,
@@ -66,8 +67,9 @@ exports.getUser = async (req, res) => {
       weight: weight,
       city: city,
       country: country,
+      images: images,
     },
-    token: "thisistoken",
+    token: req.user,
   });
 };
 

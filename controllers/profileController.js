@@ -5,7 +5,7 @@ exports.allProfiles = async (req, res) => {
 
   try {
     const checkemail = await pool.query(
-      "SELECT fullname ,profile_id FROM profile"
+      "SELECT fullname ,nickname,profile_id,images,city FROM profile"
     );
 
     res.json(checkemail.rows);

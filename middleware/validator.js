@@ -56,13 +56,16 @@ exports.logIn = [
 // Update Profile
 exports.updateProfileValidator = [
   check("sex").custom((value) => {
-    if (value === "Man" || value === "Woman" || value === "Other") {
+    if (value === "Male" || value === "Woman" || value === "Other") {
       return true;
     } else {
       throw new Error("Not valid sex !");
     }
   }),
   check("age").custom(checkAge),
+  check("nickname")
+    .isLength({ max: 5 })
+    .withMessage("Maximum lenght of 5 chars"),
 ];
 
 exports.checkChatMessage = [

@@ -65,8 +65,10 @@ router.post("/message/send", async (req, res) => {
 
   pusher.trigger("private-" + req.body.conversationID, "messages", {
     message: req.body.message,
-    created_at: "2021-01-15T01:20:18.323Z", // LATER FIX THIS TO BE CURRENT TIME WHEN ITS SEND ----------------------------
+    created_at: new Date(), // LATER FIX THIS TO BE CURRENT TIME WHEN ITS SEND ----------------------------"2021-01-15T01:20:18.323Z",
     sender_id: req.user,
+    images: req.body.chatimage,
+    fullname: req.body.fullname,
   });
 
   res.sendStatus(200);
@@ -76,6 +78,7 @@ router.post("/message/send", async (req, res) => {
 router.post("/pusher/auth", (req, res) => {
   const socketId = req.body.socket_id;
   const channel = req.body.channel_name;
+
   const auth = pusher.authenticate(socketId, channel);
   res.send(auth);
 });
