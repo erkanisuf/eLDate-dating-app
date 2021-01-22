@@ -64,8 +64,23 @@ exports.updateProfileValidator = [
   }),
   check("age").custom(checkAge),
   check("nickname")
-    .isLength({ max: 5 })
+    .isLength({ max: 7 })
     .withMessage("Maximum lenght of 5 chars"),
+  check("fullname")
+    .isLength({ min: 5 })
+    .withMessage("Fullname minimum lenght of 5 !"),
+  check("relationship").custom((value) => {
+    if (
+      value === "Single" ||
+      value === "In relationship" ||
+      value === "Married" ||
+      value === "Other"
+    ) {
+      return true;
+    } else {
+      throw new Error("Select correct relationship status !");
+    }
+  }),
 ];
 
 exports.checkChatMessage = [

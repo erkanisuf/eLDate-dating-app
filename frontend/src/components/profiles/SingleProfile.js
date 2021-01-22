@@ -8,9 +8,16 @@ import moment from "moment";
 import { usenullOrEmpty } from "../../CustomHook/chekifNull";
 import { useDispatch } from "react-redux";
 //ANT
+
 import { Descriptions, Image, Badge, Modal, Button } from "antd";
-import { ManOutlined, WomanOutlined } from "@ant-design/icons";
+import {
+  ManOutlined,
+  WomanOutlined,
+  WechatOutlined,
+  HeartOutlined,
+} from "@ant-design/icons";
 //
+
 const SingleProfile = () => {
   const [isModalVisible, setIsModalVisible] = useState(false); // ANT MODAL toggle
   const dispatch = useDispatch(); // Redux
@@ -72,19 +79,30 @@ const SingleProfile = () => {
             flexDirection: "column",
             margin: "0 auto",
 
-            justifyContent: "flex-start",
+            justifyContent: "space-between",
             alignItems: "flex-start",
           }}
         >
-          <Image width={500} src={usenullOrEmpty(profile[0].images[0])} />
-          <div>
+          <div style={{ borderBottom: "1px solid #E99AF2", padding: "15px" }}>
+            <Image width={300} src={usenullOrEmpty(profile[0].images[0])} />
+          </div>
+
+          <div style={{ borderBottom: "1px solid #E99AF2c", padding: "15px" }}>
             <Image.PreviewGroup>
               <Image
-                width={200}
+                width={75}
                 src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
               />
               <Image
-                width={200}
+                width={75}
+                src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+              />
+              <Image
+                width={75}
+                src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+              />
+              <Image
+                width={75}
                 src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
               />
             </Image.PreviewGroup>
@@ -115,11 +133,25 @@ const SingleProfile = () => {
             <Descriptions.Item label="Genre">
               {profile[0].sex === "Male" ? (
                 <span>
-                  <ManOutlined /> Male
+                  <ManOutlined
+                    style={{
+                      color: "blue",
+                      fontSize: "18px",
+                      fontWeight: "700",
+                    }}
+                  />{" "}
+                  Male
                 </span>
               ) : profile[0].sex === "Woman" ? (
                 <span>
-                  <WomanOutlined /> Woman
+                  <WomanOutlined
+                    style={{
+                      color: "#9e3571",
+                      fontSize: "18px",
+                      fontWeight: "700",
+                    }}
+                  />{" "}
+                  Woman
                 </span>
               ) : (
                 "Other"
@@ -138,25 +170,48 @@ const SingleProfile = () => {
               {profile[0].searching}
             </Descriptions.Item>
             <Descriptions.Item label="Status" span={3}>
-              <Badge status="processing" text={profile[0].relationship} />
+              <Badge
+                status={
+                  profile[0].relationship === "single"
+                    ? "success"
+                    : profile[0].relationship === "Married"
+                    ? "error"
+                    : profile[0].relationship === "In relationship"
+                    ? "error"
+                    : profile[0].relationship === "Other"
+                    ? "warning"
+                    : "default"
+                }
+                text={profile[0].relationship}
+              />
             </Descriptions.Item>
             <Descriptions.Item label="About me" span={3}>
               {profile[0].description}
             </Descriptions.Item>
           </Descriptions>
         </div>
-        <Button type="primary" onClick={showModal}>
-          Open Modal
-        </Button>
-        <Modal
-          title="Basic Modal"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Chat sendTo={profile[0].userlog_id} />
-        </Modal>
-        {/* /*                       END  DESCRIPTIONS */}
+        <div className="buttonsBox">
+          <Button
+            type="primary"
+            onClick={showModal}
+            className="btnCHatStart"
+            icon={<WechatOutlined style={{ fontSize: "55px" }} />}
+          ></Button>
+          <Button
+            type="primary"
+            className="btnMatchStart"
+            icon={<HeartOutlined style={{ fontSize: "55px" }} />}
+          ></Button>
+          <Modal
+            title={`Send a message if you wanta to start conversation with: ${profile[0].fullname}`}
+            visible={isModalVisible}
+            okButtonProps={{ style: { display: "none" } }}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <Chat sendTo={profile[0].userlog_id} />
+          </Modal>
+        </div>
       </div>
     );
 };

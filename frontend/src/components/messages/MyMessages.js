@@ -50,10 +50,7 @@ const MyMessages = () => {
     return <h1> Loading...</h1>;
   }
   return (
-    <div style={{ width: "60%", margin: "0 auto" }}>
-      <button
-        onClick={() => dispatch({ type: "CHANGE_CONVERSATION_ID", action: 14 })}
-      ></button>
+    <div style={{ width: "100%", margin: "0 auto" }}>
       <Tabs
         onChange={handleOpen}
         defaultActiveKey={
@@ -62,7 +59,7 @@ const MyMessages = () => {
         tabPosition={"left"}
         style={{
           margin: "0 auto",
-          width: "80%",
+          width: "100%",
           height: "800px",
         }}
       >
@@ -72,7 +69,7 @@ const MyMessages = () => {
               tab={
                 <div
                   style={{
-                    width: "250px",
+                    width: "100%",
                   }}
                 >
                   <Avatar
@@ -83,7 +80,7 @@ const MyMessages = () => {
                       borderRadius: "100%",
                       border:
                         openID === el.conversation_id
-                          ? "5px solid #003a8c"
+                          ? "5px solid #E99AF2"
                           : "none",
                     }}
                     icon={

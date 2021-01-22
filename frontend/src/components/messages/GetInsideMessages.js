@@ -131,7 +131,7 @@ const GetInsideMessages = ({
                   alignSelf:
                     el.sender_id === getcookie ? "flex-start" : "flex-end",
                   backgroundColor:
-                    el.sender_id === getcookie ? "#595959" : "#003a8c",
+                    el.sender_id === getcookie ? "#595959" : "#E99AF2",
 
                   color: "white",
                 }}

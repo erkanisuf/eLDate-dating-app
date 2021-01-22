@@ -79,7 +79,7 @@ const Chat = ({ sendTo }) => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "15px" }}>
       <form onSubmit={handleSubmit}>
         <Input
           style={{ width: "80%" }}

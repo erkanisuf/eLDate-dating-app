@@ -1,8 +1,9 @@
 .LayoutBackgorund {
   background-color: red;
   min-height: 100vh;
-  background-color: #8bc6ec;
-  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+  background-color: #57a1f9;
+  background-image: linear-gradient(62deg, #57a1f9 0%, #e99af2 100%);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,8 +42,9 @@
 }
 .Menu {
   border-radius: 20px;
-  background-color: #8bc6ec;
-  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+  background-color: #57a1f9;
+  background-image: linear-gradient(62deg, #57a1f9 0%, #e99af2 100%);
+
   margin: 0 auto;
   padding: 55px;
   align-self: flex-start;
@@ -63,6 +65,10 @@
 }
 .navigator a {
   margin-left: -50px;
+  transition: 0.5s;
+}
+.navigator a:hover {
+  transform: scale(1.1);
 }
 
 .rightMenu {
@@ -76,4 +82,46 @@
   justify-content: flex-start;
   text-align: center;
   background-color: white;
+}
+
+.btnSettings {
+  width: 45px;
+  height: 45px;
+  border: 1px solid grey;
+  color: grey;
+  background-color: unset;
+  border-radius: 100%;
+}
+
+.loginBtn {
+  width: 100%;
+  background-color: #e99af2;
+
+  color: white;
+  font-weight: 700;
+  border: 1px solid #ccc;
+}
+.facebookBtn {
+  margin-top: 5px;
+  width: 100%;
+  background-color: #2f55a4;
+  color: white;
+  font-weight: 700;
+}
+
+.logout {
+  cursor: pointer;
+  font-weight: 500;
+}
+.register:hover {
+  text-decoration: underline black;
+}
+
+.logout {
+  cursor: pointer;
+  color: grey;
+  font-weight: 500;
+}
+.logout:hover {
+  text-decoration: underline grey;
 }
