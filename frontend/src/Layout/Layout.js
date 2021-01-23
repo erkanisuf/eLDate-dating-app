@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Layout.css";
 import Myprofile from "../components/user/Myprofile";
 import { Link } from "react-router-dom";
 import EditProfile from "../components/user/EditProfile";
 import Login from "../components/user/Login";
 import Axios from "axios";
+import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux"; //REDUX
 //ANT
 import {
   HomeOutlined,
@@ -13,6 +15,73 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 const Layout = (props) => {
+  const getcookie = Number(Cookies.get("token"));
+  const dispatch = useDispatch();
+  const isLoged = useSelector((state) => state.AmiLogged);
+  const reTrigger = useSelector((state) => state.toggleTriggerFetchs);
+
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+
+      withCredentials: true,
+      url: `http://localhost:4000/getcookie`,
+    })
+      .then((res) => {
+        console.log(res, "dispardq");
+        if (res.status === 200) {
+          dispatch({ type: "CHECK_IF_LOGGED_IN", action: true });
+        }
+      })
+      .catch((error) => {
+        console.log(error.response.status); // 401
+        console.log(error.response.data);
+      });
+  }, [reTrigger, dispatch]);
+  ////
+
+  ///Gives me my Profile Stats
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+
+      withCredentials: true,
+      url: `http://localhost:4000/users/getuser`,
+    })
+      .then((res) => {
+        console.log(res, "MYPROFILE?");
+        dispatch({
+          type: "FETCH_MY_PROFILE",
+          action: res.data.profile,
+        });
+      })
+      .catch((error) => {
+        console.log(error.response.status); // 401
+        console.log(error.response.data);
+      });
+  }, [getcookie, reTrigger, dispatch]);
+  //Gets my COnversations
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+
+      withCredentials: true,
+      url: `http://localhost:4000/chat/getmyconversations`,
+    })
+      .then((res) => {
+        console.log(res);
+        // setMyMessages(res.data);
+        dispatch({ type: "FETCH_MY_CONVERSATIONS", action: res.data });
+      })
+      .catch((error) => {
+        console.log(error.response.status); // 401
+        console.log(error.response.data);
+      });
+  }, [dispatch, getcookie, reTrigger]);
+  //
   const logout = () => {
     Axios({
       method: "GET",
@@ -20,14 +89,23 @@ const Layout = (props) => {
 
       withCredentials: true,
       url: "http://localhost:4000/users/logout",
-    }).then((res) => console.log(res));
+    }).then((res) => {
+      console.log(res, "ko praq");
+      if (res.status === 200) {
+        dispatch({
+          type: "CHECK_IF_LOGGED_IN",
+          action: false,
+        });
+        Cookies.remove("token");
+      }
+    });
   };
   return (
     <div className="LayoutBackgorund">
       <div className="transperantBackground">
         <div className="leftMenu">
-          <Myprofile />
-          <Login />
+          {isLoged ? <Myprofile /> : <Login />}
+
           <div className="Menu">
             <nav>
               <ul className="navigator">
@@ -70,12 +148,14 @@ const Layout = (props) => {
               </ul>
             </nav>
           </div>
-          <div>
-            <EditProfile />
-            <p style={{ marginTop: "0" }} onClick={logout} className="logout">
-              Sign Out
-            </p>
-          </div>
+          {isLoged && (
+            <div>
+              <EditProfile />
+              <p style={{ marginTop: "0" }} onClick={logout} className="logout">
+                Sign Out
+              </p>
+            </div>
+          )}
         </div>
         <div className="rightMenu">{props.children}</div>
       </div>

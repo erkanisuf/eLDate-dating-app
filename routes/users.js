@@ -34,18 +34,19 @@ router.post("/login", validator.logIn, function (req, res, next) {
         return next(err);
       }
       if (!user) {
-        return res.status(401).json({ message: "User not found" });
+        return res.status(401).json({ message: "Wrong information!" });
       }
       req.logIn(user, function (err) {
         if (err) {
           return next(err);
         }
 
-        return res.json({
-          success: true,
-          message: "Successful Login",
-          user: user,
-        });
+        res
+          .writeHead(200, {
+            "Set-Cookie": "token=" + req.user,
+            "Access-Control-Allow-Credentials": "true",
+          })
+          .send();
       });
     }
   )(req, res, next);

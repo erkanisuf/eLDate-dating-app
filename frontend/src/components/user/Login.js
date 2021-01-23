@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
-
+import { useHistory, Link } from "react-router-dom";
+import { useDispatch } from "react-redux"; //REDUX
 //ANT
 import { Input, Button } from "antd";
 import {
@@ -10,8 +11,10 @@ import {
   LoginOutlined,
 } from "@ant-design/icons";
 const Login = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [form, setForm] = useState({ email: "", password: "" });
-
+  const [error, setError] = useState("");
   const faceboookLogin = () => {
     window.location = "http://localhost:4000/users/auth/facebook";
   };
@@ -35,13 +38,24 @@ const Login = () => {
     })
       .then((res) => {
         console.log(res);
+        if (res.status === 200) {
+          dispatch({ type: "CHECK_IF_LOGGED_IN", action: true });
+          setError("");
+          history.push("/");
+        }
       })
       .catch((error) => {
         // console.log(error.response.status); // 401
         // console.log(error.response.data.message);
-        console.log(error.response.data);
+        if (error.response.data.message) {
+          setError(error.response.data.message);
+        } else if (error.response.data.errors[0].msg) {
+          setError(error.response.data.errors[0].msg);
+        }
+        // console.log("xD", error.response.data.errors.errors[0].msg);
       });
   };
+  console.log(error, "State");
   return (
     <div style={{ width: "80%", textAlign: "left" }}>
       <form onSubmit={handleSubmit}>
@@ -70,6 +84,7 @@ const Login = () => {
             onChange={handleChange}
           />
         </label>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
       <div style={{ margin: "5px" }}>
         <Button
@@ -87,7 +102,12 @@ const Login = () => {
           Facebook login
         </Button>
         <div style={{ textAlign: "center" }}>
-          <span className="register">Register/</span>{" "}
+          <span className="register">
+            {" "}
+            <Link to="/register" style={{ color: "black" }}>
+              Register/
+            </Link>
+          </span>{" "}
           <span className="register">Forgot password?</span>
         </div>
       </div>

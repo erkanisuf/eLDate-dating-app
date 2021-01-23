@@ -22,12 +22,23 @@ module.exports = function (app, passport, FacebookStrategy) {
         clientID: process.env.FB_CLIENTID,
         clientSecret: process.env.FACEBOOK_CLIENTSECRET,
         callbackURL: "/users/auth/facebook/callback",
-        profileFields: ["id", "displayName", "email", "birthday"],
+        profileFields: [
+          "id",
+          "displayName",
+          "email",
+          "birthday",
+          "gender",
+          // "profileUrl",
+          // "name",
+          // "displayName",
+        ],
       },
       async (accessToken, refreshToken, profile, cb) => {
+        console.log(profile);
         const dateBorn = moment(new Date(profile._json.birthday)).format(
           "YYYY/MM/DD"
         );
+        console.log(dateBorn);
 
         const findUser = await User.findByEmail(profile._json.email);
 
@@ -38,9 +49,9 @@ module.exports = function (app, passport, FacebookStrategy) {
             hashedPasssword,
             profile._json.email,
             2, // this 2 means its facebook made in DB
-            // dateBorn // FIX DATE BORN THE FORMAT !
-            // "1991/12/21"
-            dateBorn
+
+            dateBorn,
+            profile._json.name
           );
 
           const saveNew = await newuser.save();

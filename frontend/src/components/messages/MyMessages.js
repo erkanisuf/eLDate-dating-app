@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import Axios from "axios";
 import GetInsideMessages from "./GetInsideMessages";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,12 +16,9 @@ const MyMessages = () => {
   const mymessages = useSelector((state) => state.myConversations); // Redux Selector
   const openID = useSelector((state) => state.conversationReducer);
 
-  const [open, setOpen] = useState(Number(openID));
   const handleOpen = useCallback(
     (id) => {
       dispatch({ type: "CHANGE_CONVERSATION_ID", action: Number(id) });
-
-      setOpen(Number(id));
     },
     [dispatch]
   );
@@ -47,7 +44,7 @@ const MyMessages = () => {
   }, [handleOpen, dispatch]);
 
   if (!mymessages.length) {
-    return <h1> Loading...</h1>;
+    return <h1> No conversations found yet..</h1>;
   }
   return (
     <div style={{ width: "100%", margin: "0 auto" }}>

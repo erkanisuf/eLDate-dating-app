@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import moment from "moment";
 // ANT
-import { Input, Button, Modal, Select } from "antd";
+import { Input, Button, Modal, Select, DatePicker } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 //REDUX
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export const EditProfile = () => {
   const { Option } = Select;
   const { TextArea } = Input; // ANT
   const [isModalVisible, setIsModalVisible] = useState(false); // ANT MODAL toggle
+  const dispatch = useDispatch(); //REDUX
   const myprofileREDUX = useSelector((state) => state.myProfileReducer); // REDUX
   const [error, setError] = useState([]);
-  console.log("erra", error);
+
   const [form, setForm] = useState({
     fullname: myprofileREDUX.fullname,
     nickname: myprofileREDUX.nickname,
@@ -28,7 +29,7 @@ export const EditProfile = () => {
     country: myprofileREDUX.country,
     age: myprofileREDUX.age,
   });
-
+  console.log("age", typeof myprofileREDUX.age);
   useEffect(() => {
     setForm({
       fullname: myprofileREDUX.fullname,
@@ -75,7 +76,10 @@ export const EditProfile = () => {
     })
       .then((res) => {
         console.log(res);
-        setIsModalVisible(false);
+        if (res.status === 200) {
+          dispatch({ type: "RE_TRIGGER" });
+          setIsModalVisible(false);
+        }
       })
       .catch((error) => {
         console.log(error.response.status); // 401
@@ -157,7 +161,7 @@ export const EditProfile = () => {
               </Input.Group>
             </label>
             <label>
-              nickname
+              Nickname
               <Input
                 type="text"
                 name="nickname"
@@ -175,7 +179,7 @@ export const EditProfile = () => {
               />
             </label>
             <label>
-              relationship
+              Relationship
               <Input.Group compact>
                 <Select
                   style={{ width: "100%" }}
@@ -194,18 +198,28 @@ export const EditProfile = () => {
                 </Select>
               </Input.Group>
             </label>
+            <label>
+              Interested in
+              <Input.Group compact>
+                <Select
+                  style={{ width: "100%" }}
+                  name="searching"
+                  placeholder="Looking for ...."
+                  defaultValue={form.searching}
+                  value={form.searching}
+                  onChange={(e) => {
+                    setForm({ ...form, searching: e });
+                  }}
+                >
+                  <Option value="Male">Male</Option>
+                  <Option value="Woman">Woman</Option>
+                  <Option value="Other">Other</Option>
+                </Select>
+              </Input.Group>
+            </label>
 
             <label>
-              searching
-              <Input
-                type="text"
-                name="searching"
-                value={form.searching}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              height
+              Height
               <Input
                 type="text"
                 name="height"
@@ -214,7 +228,7 @@ export const EditProfile = () => {
               />
             </label>
             <label>
-              weight
+              Weight
               <Input
                 type="text"
                 name="weight"
@@ -223,7 +237,7 @@ export const EditProfile = () => {
               />
             </label>
             <label>
-              city
+              City
               <Input
                 type="text"
                 name="city"
@@ -232,7 +246,7 @@ export const EditProfile = () => {
               />
             </label>
             <label>
-              country
+              Country
               <Input
                 type="text"
                 name="country"
@@ -241,12 +255,18 @@ export const EditProfile = () => {
               />
             </label>
             <label>
-              age
-              <Input
+              Year when im born
+              <p>
+                Your current age:{" "}
+                {moment(myprofileREDUX.age, "YYYYMMDD").fromNow(true)}
+              </p>
+              <DatePicker
                 type="date"
                 name="age"
-                value={form.age}
-                onChange={handleChange}
+                // onChange={handleChange}
+                onChange={(e) =>
+                  setForm({ ...form, age: moment(e).format("YYYY-MM-DD") })
+                }
               />
             </label>
             <Button

@@ -81,6 +81,13 @@ exports.updateProfileValidator = [
       throw new Error("Select correct relationship status !");
     }
   }),
+  check("searching").custom((value) => {
+    if (value === "Male" || value === "Woman" || value === "Other") {
+      return true;
+    } else {
+      throw new Error("Not valid genre !");
+    }
+  }),
 ];
 
 exports.checkChatMessage = [

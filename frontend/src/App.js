@@ -1,89 +1,34 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import Axios from "axios";
-import { useDispatch } from "react-redux";
-import Main from "./Main";
 import AllProfiles from "./components/profiles/AllProfiles";
 import { Switch, Route } from "react-router-dom";
 import SingleProfile from "./components/profiles/SingleProfile";
 import MyMessages from "./components/messages/MyMessages";
 import Layout from "./Layout/Layout";
+import PrivateRoute from "./CustomHook/PrivateRoute";
+import Login from "./components/user/Login";
+import RegistrationForm from "./components/user/RegistrationForm ";
 
 function App() {
-  const dispatch = useDispatch();
-
-  //Gives me Token with my ID
-  useEffect(() => {
-    Axios({
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-
-      withCredentials: true,
-      url: `http://localhost:4000/getcookie`,
-    })
-      .then((res) => {
-        //This sets token cookie with id
-      })
-      .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
-      });
-  });
-  ///Gives me my Profile Stats
-  useEffect(() => {
-    Axios({
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-
-      withCredentials: true,
-      url: `http://localhost:4000/users/getuser`,
-    })
-      .then((res) => {
-        console.log(res, "MYPROFILE?");
-        dispatch({
-          type: "FETCH_MY_PROFILE",
-          action: res.data.profile,
-        });
-      })
-      .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
-      });
-  });
-  //Gets my COnversations
-  useEffect(() => {
-    Axios({
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-
-      withCredentials: true,
-      url: `http://localhost:4000/chat/getmyconversations`,
-    })
-      .then((res) => {
-        console.log(res);
-        // setMyMessages(res.data);
-        dispatch({ type: "FETCH_MY_CONVERSATIONS", action: res.data });
-      })
-      .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
-      });
-  }, [dispatch]);
   return (
     <div>
       <Layout>
         <Switch>
-          <Route path="/main">
-            <Main />
+          <Route path="/login">
+            <div style={{ margin: "0 auto" }}>
+              <h1 style={{ color: "red" }}>
+                You need to log in to use this part
+              </h1>
+              <Login />
+            </div>
           </Route>
           <Route path="/allprofiles/:id">
             <SingleProfile />
           </Route>
-          <Route path="/allprofiles">
-            <AllProfiles />
-          </Route>
-          <Route path="/mymessages">
-            <MyMessages />
+          <PrivateRoute exact path="/allprofiles" component={AllProfiles} />
+          <PrivateRoute exact path="/mymessages" component={MyMessages} />
+          <Route path="/register">
+            <RegistrationForm />
           </Route>
           <Route path="/"></Route>
           {/* Router */}

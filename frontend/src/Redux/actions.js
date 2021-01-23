@@ -2,10 +2,8 @@ export const incrementMe = (action, state) => {
   return action.action + state;
 };
 
-export const changeName = (action, state) => {
-  const { name, age } = action.data;
-
-  return { name: name, age: age };
+export const reTriggerFunc = (action, state) => {
+  return !state;
 };
 
 //EDIT CONVERSATION ID TO SEND TO BACKEND
@@ -34,4 +32,8 @@ export const pushToMyConversations = (action, state) => {
   copyState.push(action.action);
 
   return state.push(action.action);
+};
+// Am i Logged in
+export const isLoggedIn = (action, state) => {
+  return action.action;
 };

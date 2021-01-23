@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Axios from "axios";
 import Chat from "../messages/Chat";
 import "antd/dist/antd.css";
 import "./SingleProfile.css";
 import moment from "moment";
 import { usenullOrEmpty } from "../../CustomHook/chekifNull";
-import { useDispatch } from "react-redux";
+
 //ANT
 
 import { Descriptions, Image, Badge, Modal, Button } from "antd";
@@ -20,8 +20,7 @@ import {
 
 const SingleProfile = () => {
   const [isModalVisible, setIsModalVisible] = useState(false); // ANT MODAL toggle
-  const dispatch = useDispatch(); // Redux
-  const history = useHistory(); // Router
+
   const params = useParams(); //Router
   const [profile, setProfile] = useState([]);
   useEffect(() => {
@@ -40,21 +39,7 @@ const SingleProfile = () => {
         console.log(err);
       });
   }, [params.id]);
-  console.log(profile, "SingleProfile");
 
-  const tryStartConversation = (profile) => {
-    // dispatch({
-    //   type: "PUSH_TO_MY_CONVERSATIONS_NODB",
-    //   action: {
-    //     fullname: profile[0].fullname,
-    //     user_id: profile[0].userlog_id,
-    //     images: profile[0].images,
-    //     conversation_id: 696969,
-    //   },
-    // });
-
-    history.push("/mymessages");
-  };
   // ANT MODAL
   const showModal = () => {
     setIsModalVisible(true);

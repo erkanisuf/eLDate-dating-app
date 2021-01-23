@@ -2,22 +2,30 @@ const pool = require("../db");
 // Database
 
 module.exports = class User {
-  constructor(username, password, email, typereg_id, age) {
+  constructor(username, password, email, typereg_id, age, fullname) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.typereg_id = typereg_id;
     this.age = age;
+    this.fullname = fullname;
   }
   save() {
     return pool.query(
       `WITH ins1 AS(INSERT INTO userstable(username,password,email,created_on,typereg_id)
     VALUES($1,$2,$3,CURRENT_TIMESTAMP,$4)
    RETURNING user_id)
-      INSERT INTO profile (userlog_id, age)
-      SELECT user_id, $5 FROM ins1
+      INSERT INTO profile (userlog_id, age,fullname)
+      SELECT user_id, $5,$6 FROM ins1
       RETURNING *`,
-      [this.username, this.password, this.email, this.typereg_id, this.age]
+      [
+        this.username,
+        this.password,
+        this.email,
+        this.typereg_id,
+        this.age,
+        this.fullname,
+      ]
     );
   }
 

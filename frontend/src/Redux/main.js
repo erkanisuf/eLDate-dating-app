@@ -1,14 +1,16 @@
 import myConversations from "./myConversations";
-import logInReducer from "./logInReducer";
+import toggleTriggerFetchs from "./toggleTriggerFetchs";
 import conversationReducer from "./conversationReducer";
 import myProfileReducer from "./myProfileReducer";
+import AmiLogged from "./AmiLogged";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   myConversations: myConversations,
-  isLogedin: logInReducer,
+  toggleTriggerFetchs: toggleTriggerFetchs,
   conversationReducer: conversationReducer,
   myProfileReducer: myProfileReducer,
+  AmiLogged: AmiLogged,
 });
 
 export default rootReducer;
