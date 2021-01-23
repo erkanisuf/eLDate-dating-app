@@ -17,7 +17,7 @@ const GetInsideMessages = ({
   mymessages,
 }) => {
   const getcookie = Number(Cookies.get("token"));
-  console.log("FUFU", conversationID);
+
   const [SendMessages, setSendMessages] = useState([]);
   const messagesEndRef = useRef(null);
 

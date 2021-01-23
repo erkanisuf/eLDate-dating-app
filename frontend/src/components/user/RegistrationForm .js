@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Axios from "axios";
+import { useHistory } from "react-router-dom"; //Router
 import { Input, Button, DatePicker } from "antd"; //ANT
 import moment from "moment";
 export const RegistrationForm = () => {
+  const history = useHistory();
   const [error, setError] = useState([]);
   const [form, setForm] = useState({
     email: "",
@@ -32,29 +34,26 @@ export const RegistrationForm = () => {
       url: "http://localhost:4000/users/newuser",
     })
       .then((res) => {
-        console.log(res);
+        console.log(res, "GOOD REG");
+        if (res.status === 200) {
+          setForm({
+            email: "",
+            password: "",
+            passwordConfirmation: "",
+            username: "",
+            age: "",
+          });
+          history.push("/updatemyprofile");
+        }
       })
       .catch((error) => {
         console.log(error.response.status); // 401
         console.log(error.response.data);
+        setError(error.response.data.errors);
       });
   };
+  console.log(error);
 
-  useEffect(() => {
-    function getAge() {
-      var today = new Date();
-      var birthDate = new Date(form.age);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      console.log(age);
-      return age;
-    }
-    getAge();
-  }, [form.age]);
-  console.log(form.age);
   return (
     <div
       style={{
@@ -121,6 +120,15 @@ export const RegistrationForm = () => {
         </label>
         <input type="submit" value="Submit" />
       </form>
+      {error.length
+        ? error.map((el, index) => {
+            return (
+              <p style={{ color: "red" }} key={index}>
+                {el.param} :{el.msg}
+              </p>
+            );
+          })
+        : ""}
     </div>
   );
 };

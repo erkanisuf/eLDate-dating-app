@@ -10,7 +10,7 @@ const checkAge = (value) => {
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
     age--;
   }
-  console.log(age);
+
   if (age < 18) {
     throw new Error("You cant be underage 18 !");
   } else {
@@ -28,7 +28,7 @@ exports.createUser = [
         }
       });
     })
-    .withMessage("FUCKYOU"),
+    .withMessage("Wrong value"),
   check("password")
     .isLength({ min: 5 })
     .withMessage("Password must be at least 5 chars long"),
@@ -42,7 +42,7 @@ exports.createUser = [
   check("username")
     .isLength({ min: 5 })
     .withMessage("Username must be at least 5 chars long"),
-  check("age").isDate().custom(checkAge),
+  check("age").isDate().custom(checkAge).withMessage("Wrong age value"),
 ];
 //--end
 

@@ -8,6 +8,7 @@ import Layout from "./Layout/Layout";
 import PrivateRoute from "./CustomHook/PrivateRoute";
 import Login from "./components/user/Login";
 import RegistrationForm from "./components/user/RegistrationForm ";
+import RedirectProfile from "./components/user/RedirectProfile";
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
           <Route path="/register">
             <RegistrationForm />
           </Route>
+          <Route path="/updatemyprofile">
+            <RedirectProfile />
+          </Route>
+
           <Route path="/"></Route>
           {/* Router */}
         </Switch>

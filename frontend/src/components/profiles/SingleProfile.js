@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Axios from "axios";
 import Chat from "../messages/Chat";
 import "antd/dist/antd.css";
 import "./SingleProfile.css";
 import moment from "moment";
 import { usenullOrEmpty } from "../../CustomHook/chekifNull";
+import { useSelector, useDispatch } from "react-redux"; //REDUX
 
 //ANT
 
@@ -19,11 +20,35 @@ import {
 //
 
 const SingleProfile = () => {
+  const history = useHistory(); // React Router
+  const myConversationRedux = useSelector((state) => state.myConversations);
+  const newOrRedirect = useSelector((state) => state.conversationReducer); // REDUX
+
+  const dispatch = useDispatch(); //REDUX
   const [isModalVisible, setIsModalVisible] = useState(false); // ANT MODAL toggle
 
   const params = useParams(); //Router
   const [profile, setProfile] = useState([]);
+
   useEffect(() => {
+    const findConversation = (data) => {
+      const filterArray = myConversationRedux.filter(
+        (el) => el.user_id === data[0].userlog_id
+      );
+
+      if (filterArray.length) {
+        dispatch({
+          type: "CHANGE_CONVERSATION_ID",
+          action: filterArray[0].conversation_id,
+        });
+      } else {
+        dispatch({
+          type: "CHANGE_CONVERSATION_ID",
+          action: null,
+        });
+      }
+    };
+
     Axios({
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -32,13 +57,15 @@ const SingleProfile = () => {
       url: `http://localhost:4000/profiles/allprofiles/${params.id}`,
     })
       .then((res) => {
-        console.log(res);
-        setProfile(res.data);
+        if (res.status === 200) {
+          setProfile(res.data);
+          findConversation(res.data);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [params.id]);
+  }, [params.id, dispatch, myConversationRedux]);
 
   // ANT MODAL
   const showModal = () => {
@@ -51,6 +78,10 @@ const SingleProfile = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+  // If got covnersation
+  const alreadyGotChat = () => {
+    history.push("/mymessages");
   };
   if (!profile.length) return <h1>Loading...</h1>;
   else
@@ -178,10 +209,11 @@ const SingleProfile = () => {
         <div className="buttonsBox">
           <Button
             type="primary"
-            onClick={showModal}
+            onClick={newOrRedirect === null ? showModal : alreadyGotChat}
             className="btnCHatStart"
             icon={<WechatOutlined style={{ fontSize: "55px" }} />}
           ></Button>
+
           <Button
             type="primary"
             className="btnMatchStart"

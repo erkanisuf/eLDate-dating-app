@@ -4,13 +4,19 @@ import moment from "moment";
 // ANT
 import { Input, Button, Modal, Select, DatePicker } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
+import { useLocation, useHistory } from "react-router-dom"; // ROUTER
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
 
 export const EditProfile = () => {
+  const location = useLocation(); //ROUTER
+  console.log(location, "PARAM");
+  const history = useHistory(); // ROUTER
   const { Option } = Select;
   const { TextArea } = Input; // ANT
-  const [isModalVisible, setIsModalVisible] = useState(false); // ANT MODAL toggle
+  const [isModalVisible, setIsModalVisible] = useState(
+    location.pathname === "/updatemyprofile" ? true : false
+  ); // ANT MODAL toggle
   const dispatch = useDispatch(); //REDUX
   const myprofileREDUX = useSelector((state) => state.myProfileReducer); // REDUX
   const [error, setError] = useState([]);
@@ -79,6 +85,10 @@ export const EditProfile = () => {
         if (res.status === 200) {
           dispatch({ type: "RE_TRIGGER" });
           setIsModalVisible(false);
+          if (location.pathname === "/updatemyprofile") {
+            history.push("/");
+            console.log("WTF IS GOING ON");
+          }
         }
       })
       .catch((error) => {
@@ -111,7 +121,15 @@ export const EditProfile = () => {
           <SettingOutlined style={{ fontSize: "25px", cursor: "Pointer" }} />
         }
       ></Button>
-      <p style={{ color: "grey", fontWeight: "600", marginTop: "5px" }}>
+      <p
+        onClick={showModal}
+        style={{
+          color: "grey",
+          fontWeight: "600",
+          marginTop: "5px",
+          cursor: "Pointer",
+        }}
+      >
         Edit Profile
       </p>
 
