@@ -9,6 +9,8 @@ import PrivateRoute from "./CustomHook/PrivateRoute";
 import Login from "./components/user/Login";
 import RegistrationForm from "./components/user/RegistrationForm ";
 import RedirectProfile from "./components/user/RedirectProfile";
+import ForgotPassword from "./components/user/ForgotPassword";
+import ResetPassword from "./components/user/ResetPassword";
 
 function App() {
   return (
@@ -23,17 +25,20 @@ function App() {
               <Login />
             </div>
           </Route>
-          <Route path="/allprofiles/:id">
-            <SingleProfile />
-          </Route>
+
+          <PrivateRoute path="/allprofiles/:id" component={SingleProfile} />
           <PrivateRoute exact path="/allprofiles" component={AllProfiles} />
           <PrivateRoute exact path="/mymessages" component={MyMessages} />
           <Route path="/register">
             <RegistrationForm />
           </Route>
-          <Route path="/updatemyprofile">
-            <RedirectProfile />
+          <Route path="/forgotpassword">
+            <ForgotPassword />
           </Route>
+          <Route path="/resetpassword/:id">
+            <ResetPassword />
+          </Route>
+          <PrivateRoute path="/updatemyprofile" component={RedirectProfile} />
 
           <Route path="/"></Route>
           {/* Router */}

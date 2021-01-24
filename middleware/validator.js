@@ -64,8 +64,8 @@ exports.updateProfileValidator = [
   }),
   check("age").custom(checkAge),
   check("nickname")
-    .isLength({ max: 7 })
-    .withMessage("Maximum lenght of 5 chars"),
+    .isLength({ max: 10 })
+    .withMessage("Maximum lenght of 10 chars"),
   check("fullname")
     .isLength({ min: 5 })
     .withMessage("Fullname minimum lenght of 5 !"),
@@ -85,7 +85,7 @@ exports.updateProfileValidator = [
     if (value === "Male" || value === "Woman" || value === "Other") {
       return true;
     } else {
-      throw new Error("Not valid genre !");
+      throw new Error("Not correct SEARCH valid genre !");
     }
   }),
 ];
@@ -96,3 +96,32 @@ exports.checkChatMessage = [
     .withMessage("You cant send empty Messages!"),
 ];
 //--end
+
+//chesks forgot passw email
+exports.checkForgotPasswordEmail = [
+  check("email")
+    .isEmail()
+    .custom((value) => {
+      return User.findByEmail(value).then((user) => {
+        if (!user.rows.length) {
+          return Promise.reject("E-mail not found in the system!");
+        }
+      });
+    })
+    .withMessage("Wrong value"),
+];
+//--end
+
+// Check passwords COnfirm RESET MODE
+exports.checkResetPassowrds = [
+  check("password")
+    .isLength({ min: 5 })
+    .withMessage("Password must be at least 5 chars long"),
+  check("passwordConfirmation").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Password confirmation does not match password");
+    }
+    return true;
+  }),
+];
+// --end

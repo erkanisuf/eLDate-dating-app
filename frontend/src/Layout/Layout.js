@@ -7,6 +7,7 @@ import Login from "../components/user/Login";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux"; //REDUX
+import { useHistory } from "react-router-dom";
 //ANT
 import {
   HomeOutlined,
@@ -16,9 +17,10 @@ import {
 } from "@ant-design/icons";
 const Layout = (props) => {
   const getcookie = Number(Cookies.get("token"));
-  const dispatch = useDispatch();
-  const isLoged = useSelector((state) => state.AmiLogged);
-  const reTrigger = useSelector((state) => state.toggleTriggerFetchs);
+  const dispatch = useDispatch(); // REDUX
+  const isLoged = useSelector((state) => state.AmiLogged); // REDUX
+  const reTrigger = useSelector((state) => state.toggleTriggerFetchs); // REDUX
+  const history = useHistory(); // ROUTER
 
   useEffect(() => {
     Axios({
@@ -51,11 +53,12 @@ const Layout = (props) => {
       url: `http://localhost:4000/users/getuser`,
     })
       .then((res) => {
-        console.log(res, "MYPROFILE?");
-        dispatch({
-          type: "FETCH_MY_PROFILE",
-          action: res.data.profile,
-        });
+        if (res.status === 200) {
+          dispatch({
+            type: "FETCH_MY_PROFILE",
+            action: res.data.profile,
+          });
+        }
       })
       .catch((error) => {
         console.log(error.response.status); // 401
@@ -93,10 +96,17 @@ const Layout = (props) => {
       console.log(res, "ko praq");
       if (res.status === 200) {
         dispatch({
+          type: "RESET_PROFILE",
+        });
+        dispatch({
           type: "CHECK_IF_LOGGED_IN",
           action: false,
         });
+        dispatch({
+          type: "RE_TRIGGER",
+        });
         Cookies.remove("token");
+        history.push("/");
       }
     });
   };

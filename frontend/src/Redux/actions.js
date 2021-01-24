@@ -37,3 +37,23 @@ export const pushToMyConversations = (action, state) => {
 export const isLoggedIn = (action, state) => {
   return action.action;
 };
+
+//reset profile on logout
+export const profileReset = (action, state) => {
+  const myprofile = {
+    fullname: "",
+    nickname: "",
+    description: "",
+    sex: "",
+    relationship: "",
+    searching: "",
+    height: "",
+    phone: "",
+    weight: "",
+    city: "",
+    country: "",
+    age: "",
+    images: [],
+  };
+  return myprofile;
+};

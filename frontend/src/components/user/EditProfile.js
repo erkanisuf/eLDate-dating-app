@@ -300,7 +300,7 @@ export const EditProfile = () => {
             error.errors.map((el, index) => {
               return (
                 <div key={index} style={{ color: "red" }}>
-                  {el.msg}
+                  {el.param} : {el.msg}
                 </div>
               );
             })}

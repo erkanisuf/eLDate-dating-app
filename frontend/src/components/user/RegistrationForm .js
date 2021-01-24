@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import { useHistory } from "react-router-dom"; //Router
-import { Input, Button, DatePicker } from "antd"; //ANT
+import { Input, DatePicker } from "antd"; //ANT
+import { useDispatch } from "react-redux"; //REDUX
 import moment from "moment";
+import "./RegForm.css";
 export const RegistrationForm = () => {
-  const history = useHistory();
+  const dispatch = useDispatch(); // REDUX
+  const history = useHistory(); // ROUTER
   const [error, setError] = useState([]);
   const [form, setForm] = useState({
     email: "",
@@ -43,6 +46,9 @@ export const RegistrationForm = () => {
             username: "",
             age: "",
           });
+          dispatch({ type: "CHECK_IF_LOGGED_IN", action: true });
+          dispatch({ type: "RE_TRIGGER" });
+          setError([]);
           history.push("/updatemyprofile");
         }
       })
@@ -55,17 +61,8 @@ export const RegistrationForm = () => {
   console.log(error);
 
   return (
-    <div
-      style={{
-        backgroundColor: "pink",
-        margin: "0 auto",
-        display: "flex",
-        width: "70%",
-        justifyContent: "space-between",
-        flexDirection: "column",
-      }}
-    >
-      <form onSubmit={handleSubmit}>
+    <div style={{ margin: "0 auto", height: "700px", width: "100%" }}>
+      <form onSubmit={handleSubmit} className="regForm ">
         <label>
           email
           <Input
@@ -77,9 +74,9 @@ export const RegistrationForm = () => {
           />
         </label>
         <label>
-          Username
+          Full name
           <Input
-            placeholder="Username"
+            placeholder="First and Second name"
             type="text"
             name="username"
             value={form.username}
@@ -88,7 +85,7 @@ export const RegistrationForm = () => {
         </label>
         <label>
           Password
-          <Input
+          <Input.Password
             placeholder="password"
             type="text"
             name="password"
@@ -98,7 +95,7 @@ export const RegistrationForm = () => {
         </label>
         <label>
           Confirm password
-          <Input
+          <Input.Password
             placeholder="Confirm password"
             type="text"
             name="passwordConfirmation"
@@ -107,7 +104,7 @@ export const RegistrationForm = () => {
           />
         </label>
 
-        <label>
+        <label style={{ display: "flex", flexDirection: "column" }}>
           What year are you born?
           <DatePicker
             placeholder="What year are you born.."

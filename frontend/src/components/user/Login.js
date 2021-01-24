@@ -40,6 +40,7 @@ const Login = () => {
         console.log(res);
         if (res.status === 200) {
           dispatch({ type: "CHECK_IF_LOGGED_IN", action: true });
+          dispatch({ type: "RE_TRIGGER" });
           setError("");
           history.push("/");
         }
@@ -55,7 +56,7 @@ const Login = () => {
         // console.log("xD", error.response.data.errors.errors[0].msg);
       });
   };
-  console.log(error, "State");
+
   return (
     <div style={{ width: "80%", textAlign: "left" }}>
       <form onSubmit={handleSubmit}>
@@ -108,7 +109,12 @@ const Login = () => {
               Register/
             </Link>
           </span>{" "}
-          <span className="register">Forgot password?</span>
+          <span className="register">
+            {" "}
+            <Link to="/forgotpassword" style={{ color: "black" }}>
+              Forgot Password?
+            </Link>
+          </span>
         </div>
       </div>
     </div>

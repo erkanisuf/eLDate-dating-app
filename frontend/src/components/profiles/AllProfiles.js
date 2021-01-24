@@ -62,7 +62,7 @@ const AllProfiles = () => {
                 }
               >
                 <Meta
-                  title={usenullOrEmpty(el.nickname)}
+                  title={el.nickname ? el.nickname : el.fullname}
                   description={usenullOrEmpty(el.city)}
                 />
               </Card>

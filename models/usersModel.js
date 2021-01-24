@@ -8,7 +8,6 @@ module.exports = class User {
     this.email = email;
     this.typereg_id = typereg_id;
     this.age = age;
-    this.fullname = fullname;
   }
   save() {
     return pool.query(
@@ -24,7 +23,7 @@ module.exports = class User {
         this.email,
         this.typereg_id,
         this.age,
-        this.fullname,
+        this.username,
       ]
     );
   }

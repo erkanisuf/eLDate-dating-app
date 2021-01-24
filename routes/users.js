@@ -16,9 +16,39 @@ require("./passportLocal")(passport, LocalStrategy);
 
 //end-----
 
-//newuser
-router.post("/newuser", validator.createUser, usersController.newUser);
-//--end
+router.post(
+  "/newuser",
+  validator.createUser,
+  usersController.newUser,
+  function (req, res, next) {
+    passport.authenticate(
+      "local",
+      { failureFlash: true },
+      function (err, user, info) {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        if (!user) {
+          return res.status(401).json({ message: "Wrong information!" });
+        }
+        req.logIn(user, function (err) {
+          if (err) {
+            return next(err);
+          }
+
+          res.status(200).json({ message: "sucsessfuly created user!" });
+          // res
+          //   .writeHead(200, {
+          //     "Set-Cookie": "token=" + req.user,
+          //     "Access-Control-Allow-Credentials": "true",
+          //   })
+          //   .send();
+        });
+      }
+    )(req, res, next);
+  }
+);
 
 //Local Strat
 router.post("/login", validator.logIn, function (req, res, next) {
@@ -77,8 +107,23 @@ router.get("/logout", (req, res, next) => {
 });
 //----end-facebook
 
+//FORGOT PASSWORD  - Sends Email to COnfirm
+router.put(
+  "/forgotpassword",
+  validator.checkForgotPasswordEmail,
+  usersController.forgotPassword
+);
+//RESET PASSWORD
+router.put(
+  "/resetpassword/:id",
+  validator.checkResetPassowrds,
+  usersController.resetPassword
+);
+//---end
+
 //Gets User Profile
 router.get("/getuser", isLogedin, usersController.getUser);
+//Update user Profile
 router.put(
   "/updateprofile",
   isLogedin,

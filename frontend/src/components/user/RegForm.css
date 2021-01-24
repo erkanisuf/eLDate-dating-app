@@ -1,0 +1,61 @@
+.regForm {
+  margin: 0 auto;
+  display: flex;
+  width: 50%;
+  height: 100%;
+  padding: 25px;
+  justify-content: space-between;
+  flex-direction: column;
+  background-image: linear-gradient(62deg, #57a1f9 0%, #e99af2 100%);
+  border-radius: 15px;
+}
+.regForm label {
+  border-radius: 15px;
+  height: 55px;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: 700;
+  text-shadow: 3px 3px 15px black;
+}
+
+.regForm input {
+  border-radius: 15px;
+  height: 55px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.regForm span {
+  height: 55px;
+
+  border-radius: 15px;
+  padding-top: 7px;
+  text-align: center;
+}
+.regForm span input {
+  text-align: center;
+  height: 40px;
+}
+
+.regForm div {
+  height: 35px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  padding: 5px;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.regForm input[type="submit"] {
+  width: 100%;
+  background-color: #e99af2;
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+  border: none;
+}
+
+.regForm input[type="submit"]:hover {
+  background-color: white;
+  border: 1px solid #e99af2;
+  color: #e99af2;
+}
