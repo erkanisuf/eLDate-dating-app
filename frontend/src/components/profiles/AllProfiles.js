@@ -24,6 +24,9 @@ const AllProfiles = () => {
         console.log(err);
       });
   }, []);
+  if (!allprofiles.length) {
+    return <h1>Loading ....</h1>;
+  }
 
   return (
     <div

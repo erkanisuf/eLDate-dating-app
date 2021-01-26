@@ -141,7 +141,7 @@ const Layout = (props) => {
                   style={{
                     color: "white",
                   }}
-                  to="/"
+                  to="/matchme"
                 >
                   <FireOutlined />
                   Match
