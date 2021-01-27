@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Chat from "../messages/Chat";
-import { Avatar, Button, Modal } from "antd"; // ANT
+import { Avatar, Button, Modal, Spin } from "antd"; // ANT
 import { Link } from "react-router-dom"; // ROUTEr
 import { WechatOutlined } from "@ant-design/icons"; // ANT ICONS
 
@@ -43,7 +43,7 @@ const ChildmyMatch = ({ matchID }) => {
   // If got covnersation
 
   if (profile === null) {
-    return <h1> Loading...</h1>;
+    return <Spin size="large" />;
   }
   return (
     <div

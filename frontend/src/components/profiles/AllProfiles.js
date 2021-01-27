@@ -3,7 +3,7 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import { usenullOrEmpty } from "../../CustomHook/chekifNull";
 //ANT DESIGN
-import { Avatar, Card } from "antd";
+import { Avatar, Card, Spin } from "antd";
 const AllProfiles = () => {
   const { Meta } = Card;
   // Ant Design Meta
@@ -25,7 +25,7 @@ const AllProfiles = () => {
       });
   }, []);
   if (!allprofiles.length) {
-    return <h1>Loading ....</h1>;
+    return <Spin size="large" />;
   }
 
   return (

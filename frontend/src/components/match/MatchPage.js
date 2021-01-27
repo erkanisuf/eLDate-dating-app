@@ -3,7 +3,7 @@ import Axios from "axios";
 // import TinderCard from '../react-tinder-card/index'
 import TinderCard from "react-tinder-card";
 import "./MatchPage.css";
-import { Button, Alert } from "antd";
+import { Button, Alert, Spin } from "antd";
 import { HeartTwoTone, FrownOutlined } from "@ant-design/icons";
 import moment from "moment"; // moment
 function MatchPage() {
@@ -81,7 +81,7 @@ function MatchPage() {
   };
 
   if (!characters.length) {
-    return <h1>Loading..!</h1>;
+    return <Spin size="large" />;
   } else if (childRefs.length <= 4) {
     return (
       <h1>

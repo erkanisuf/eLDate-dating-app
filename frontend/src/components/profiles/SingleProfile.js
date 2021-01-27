@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux"; //REDUX
 
 //ANT
 
-import { Descriptions, Image, Badge, Modal, Button, Alert } from "antd";
+import { Descriptions, Image, Badge, Modal, Button, Alert, Spin } from "antd";
 import {
   ManOutlined,
   WomanOutlined,
@@ -105,7 +105,7 @@ const SingleProfile = () => {
         console.log(err);
       });
   };
-  if (!profile.length) return <h1>Loading...</h1>;
+  if (!profile.length) return <Spin size="large" />;
   else
     return (
       <div className="myGrid">

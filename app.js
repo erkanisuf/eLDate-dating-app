@@ -56,12 +56,15 @@ const profilesRoute = require("./routes/profiles");
 const chatRoute = require("./routes/chat");
 const matchRoute = require("./routes/matches");
 const notificationRoute = require("./routes/notifications");
+const picturesRoute = require("./routes/pictures");
 
 app.use("/users", usersRoute);
 app.use("/profiles", profilesRoute);
 app.use("/chat", chatRoute);
 app.use("/matches", matchRoute);
+app.use("/pictures", picturesRoute);
 app.use("/notifications", notificationRoute);
+
 app.get("/getcookie", (req, res) => {
   if (req.isAuthenticated()) {
     res
