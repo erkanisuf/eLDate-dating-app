@@ -1,44 +1,26 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Axios from "axios";
 // import TinderCard from '../react-tinder-card/index'
 import TinderCard from "react-tinder-card";
 import "./MatchPage.css";
-const asdf = [
-  {
-    name: "Richard Hendricks",
-    url:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  },
-  {
-    name: "Erlich Bachman",
-    url:
-      "https://media.istockphoto.com/photos/man-portrait-side-view-of-young-blond-guy-in-jean-shirt-looking-on-picture-id1139970314?k=6&m=1139970314&s=612x612&w=0&h=6WlQJEXcL3sd0VenePGcquhLFJI4-wQVnC54R4HMqCw=",
-  },
-  {
-    name: "Monica Hall",
-    url:
-      "https://www.irreverentgent.com/wp-content/uploads/2018/03/Awesome-Profile-Pictures-for-Guys-look-away2.jpg",
-  },
-];
-
-// const alreadyRemoved = [];
-// let charactersState = db; // This fixes issues with updating characters state forcing it to use the current state and not the state that was active when the card was created.
-
+import { Button, Alert } from "antd";
+import { HeartTwoTone, FrownOutlined } from "@ant-design/icons";
+import moment from "moment"; // moment
 function MatchPage() {
   const [db, setDB] = useState([]);
-  const alreadyRemoved = [];
-  // This fixes issues with updating characters state forcing it to use the current state and not the state that was active when the card was created.
 
   const [characters, setCharacters] = useState(db);
-  const [lastDirection, setLastDirection] = useState();
-  let charactersState = characters;
+  const [lastDirection, setLastDirection] = useState(); //Right or Left
+  const [msg, setMsg] = useState(""); // Name of profile
+
+  const [retrigger, setReTrigger] = useState(false);
   useEffect(() => {
     Axios({
       method: "GET",
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: "http://localhost:4000/profiles/allprofiles",
+      url: "http://localhost:4000/matches/profiles",
     })
       .then((res) => {
         setDB(res.data);
@@ -47,98 +29,131 @@ function MatchPage() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [retrigger]);
+
+  const insertInMatches = (param) => {
+    Axios({
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: {
+        shown_user: param,
+      },
+      withCredentials: true,
+      url: "http://localhost:4000/matches/insertmatch",
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const childRefs = useMemo(
     () =>
       Array(characters.length)
         .fill(0)
         .map((i) => React.createRef()),
-    [db]
+    [characters.length]
   );
-  console.log(childRefs, "CHILD");
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete);
+  const swiped = (direction, name) => {
     setLastDirection(direction);
-    alreadyRemoved.push(nameToDelete);
+    if (direction === "right") setMsg(`${name} Match request`);
   };
 
-  const outOfFrame = (name) => {
-    console.log(name + " left the screen!");
-    charactersState = charactersState.filter(
-      (character) => character.fullname !== name
-    );
-    setCharacters(charactersState);
+  const outOfFrame = (userlog_id, index) => {
+    insertInMatches(userlog_id);
+    const copy = [...characters];
+    copy.splice(index, 1);
+    setCharacters(copy);
   };
-  const [msg, setMsg] = useState("");
+  console.log(characters);
   const swipe = (dir, index) => {
-    console.log(dir, index);
+    console.log("ACTIVATION");
+    setLastDirection(dir);
+
     const msgcopy = [...characters];
     const copy = [...characters];
     copy.splice(index, 1);
     setCharacters(copy);
-    setMsg(`${msgcopy[index].fullname} Match request`);
+    insertInMatches(msgcopy[index].userlog_id);
+    if (dir === "right") setMsg(`${msgcopy[index].fullname} Match request`);
   };
-  console.log(characters);
+
+  if (!characters.length) {
+    return <h1>Loading..!</h1>;
+  } else if (childRefs.length <= 4) {
+    return (
+      <h1>
+        Press here to start!
+        <Button onClick={() => setReTrigger(!retrigger)}>Start Again</Button>
+      </h1>
+    );
+  }
   return (
     <div className="root">
-      <h1>{msg}</h1>
-      <h1>React Tinder Card</h1>
       <div className="cardContainer">
         {characters.map((character, index) => (
           <TinderCard
             ref={childRefs[index]}
             className="swipe"
             key={index}
-            onSwipe={(dir) =>
-              swiped(
-                dir,
-                character.fullname !== undefined ? character.fullname : "Fakme"
-              )
-            }
-            onCardLeftScreen={() =>
-              outOfFrame(
-                character.fullname !== undefined ? character.fullname : "Fakme"
-              )
-            }
+            onSwipe={(dir) => swiped(dir, character.fullname, index)}
+            onCardLeftScreen={() => outOfFrame(character.userlog_id, index)}
           >
             <div
               style={{
-                backgroundImage:
-                  "url(" + character.images.length
+                backgroundImage: `url(${
+                  character.images.length
                     ? character.images[0]
-                    : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png" +
-                      ")",
+                    : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
+                })`,
               }}
               className="card"
             >
               <h3>
-                {character.fullname !== undefined
-                  ? character.fullname
-                  : "Fakme"}
+                {character.fullname},
+                {moment(character.age, "YYYYMMDD").fromNow(true)}
               </h3>
-              <div className="buttons">
-                <button onClick={() => swipe("left", index)}>
-                  Swipe left!
-                </button>
-                <button onClick={() => swipe("right", index)}>
-                  Swipe right!
-                </button>
-              </div>
+            </div>
+            <div className="buttons">
+              <Button
+                className="swipeLeft"
+                onClick={() => swipe("left", index)}
+              >
+                <FrownOutlined style={{ fontSize: "50px" }} />
+                NOT
+              </Button>
+              <Button
+                className="swipeRight"
+                onClick={() => swipe("right", index)}
+              >
+                <HeartTwoTone
+                  style={{ fontSize: "50px" }}
+                  spin={true}
+                  twoToneColor="#f1bcd9"
+                />
+                MATCH!
+              </Button>
             </div>
           </TinderCard>
         ))}
       </div>
-
-      {lastDirection ? (
-        <h2 key={lastDirection} className="infoText">
-          You swiped {lastDirection}
-        </h2>
-      ) : (
-        <h2 className="infoText">
-          Swipe a card or press a button to get started!
-        </h2>
-      )}
+      <div style={{ width: "100%", margin: "50px auto", padding: "25px" }}>
+        {lastDirection ? (
+          lastDirection === "right" ? (
+            <div>
+              <Alert message={`${msg} :)`} type={"success"} showIcon />
+            </div>
+          ) : (
+            <Alert message={`Not match :(`} type={"error"} showIcon />
+          )
+        ) : (
+          <h2 className="infoText">
+            Swipe a card or press a button to get started!
+          </h2>
+        )}
+      </div>
     </div>
   );
 }

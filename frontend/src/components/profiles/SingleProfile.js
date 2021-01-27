@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux"; //REDUX
 
 //ANT
 
-import { Descriptions, Image, Badge, Modal, Button } from "antd";
+import { Descriptions, Image, Badge, Modal, Button, Alert } from "antd";
 import {
   ManOutlined,
   WomanOutlined,
@@ -29,7 +29,7 @@ const SingleProfile = () => {
 
   const params = useParams(); //Router
   const [profile, setProfile] = useState([]);
-
+  console.log(profile);
   useEffect(() => {
     const findConversation = (data) => {
       const filterArray = myConversationRedux.filter(
@@ -82,6 +82,28 @@ const SingleProfile = () => {
   // If got covnersation
   const alreadyGotChat = () => {
     history.push("/mymessages");
+  };
+  // MATCH FROM SINGLE PROFILE
+  const [badge, setBadge] = useState(false);
+  const insertInMatches = (param) => {
+    Axios({
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: {
+        shown_user: param,
+      },
+      withCredentials: true,
+      url: "http://localhost:4000/matches/insertmatch",
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setBadge(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   if (!profile.length) return <h1>Loading...</h1>;
   else
@@ -215,6 +237,7 @@ const SingleProfile = () => {
           ></Button>
 
           <Button
+            onClick={() => insertInMatches(profile[0].userlog_id)}
             type="primary"
             className="btnMatchStart"
             icon={<HeartOutlined style={{ fontSize: "55px" }} />}
@@ -228,6 +251,17 @@ const SingleProfile = () => {
           >
             <Chat sendTo={profile[0].userlog_id} />
           </Modal>
+        </div>
+        <div>
+          {badge ? (
+            <Alert
+              message="Attempt to match success!"
+              type="success"
+              showIcon
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

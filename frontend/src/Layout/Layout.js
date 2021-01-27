@@ -8,6 +8,7 @@ import Axios from "axios";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux"; //REDUX
 import { useHistory } from "react-router-dom";
+import Notifications from "./Notifications";
 //ANT
 import {
   HomeOutlined,
@@ -114,11 +115,27 @@ const Layout = (props) => {
     <div className="LayoutBackgorund">
       <div className="transperantBackground">
         <div className="leftMenu">
-          {isLoged ? <Myprofile /> : <Login />}
+          {isLoged ? (
+            <div>
+              <Myprofile />
+              <Notifications />
+            </div>
+          ) : (
+            <Login />
+          )}
 
           <div className="Menu">
             <nav>
               <ul className="navigator">
+                <Link
+                  style={{
+                    color: "white",
+                  }}
+                  to="/mymatches"
+                >
+                  <HomeOutlined />
+                  My Matches
+                </Link>
                 <Link
                   style={{
                     color: "white",

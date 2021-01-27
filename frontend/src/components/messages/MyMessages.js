@@ -4,7 +4,7 @@ import GetInsideMessages from "./GetInsideMessages";
 import { useDispatch, useSelector } from "react-redux";
 import "antd/dist/antd.css";
 //ANT DESIGN
-import { Tabs } from "antd";
+import { Tabs, Badge } from "antd";
 import { Avatar } from "antd";
 
 //
@@ -15,10 +15,25 @@ const MyMessages = () => {
   const dispatch = useDispatch(); //Redux
   const mymessages = useSelector((state) => state.myConversations); // Redux Selector
   const openID = useSelector((state) => state.conversationReducer);
+  const msgNotifc = useSelector((state) => state.myNotifications);
 
   const handleOpen = useCallback(
     (id) => {
       dispatch({ type: "CHANGE_CONVERSATION_ID", action: Number(id) });
+      Axios({
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        data: { conversation_id: Number(id) },
+        withCredentials: true,
+        url: `http://localhost:4000/notifications/readmsgnotifications`,
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error.response.status); // 401
+          console.log(error.response.data);
+        });
     },
     [dispatch]
   );
@@ -69,6 +84,34 @@ const MyMessages = () => {
                     width: "100%",
                   }}
                 >
+                  {msgNotifc.messages.filter(
+                    (z) => z.conversation_id === el.conversation_id
+                  ).length ? (
+                    <Badge
+                      count={
+                        <div
+                          style={{
+                            color: "white",
+                            backgroundColor: "red",
+                            borderRadius: "100%",
+                            width: "25px",
+                            padding: "5px",
+                            margin: 0,
+                            zIndex: 3,
+                          }}
+                        >
+                          {
+                            msgNotifc.messages.filter(
+                              (z) => z.conversation_id === el.conversation_id
+                            ).length
+                          }
+                        </div>
+                      }
+                    ></Badge>
+                  ) : (
+                    ""
+                  )}
+
                   <Avatar
                     size={75}
                     style={{
@@ -83,7 +126,7 @@ const MyMessages = () => {
                     icon={
                       <img
                         src={
-                          el.images !== null
+                          el.images[0]
                             ? el.images[0]
                             : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
                         }

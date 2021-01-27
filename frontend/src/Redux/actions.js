@@ -57,3 +57,8 @@ export const profileReset = (action, state) => {
   };
   return myprofile;
 };
+
+//msg notification
+export const msgNotific = (action, state) => {
+  return { ...state, messages: action.action };
+};

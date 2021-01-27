@@ -12,6 +12,9 @@ import RedirectProfile from "./components/user/RedirectProfile";
 import ForgotPassword from "./components/user/ForgotPassword";
 import ResetPassword from "./components/user/ResetPassword";
 import MatchPage from "./components/match/MatchPage";
+
+import MyMatches from "./components/match/MyMatches";
+
 function App() {
   return (
     <div>
@@ -28,7 +31,9 @@ function App() {
 
           <PrivateRoute path="/allprofiles/:id" component={SingleProfile} />
           <PrivateRoute exact path="/allprofiles" component={AllProfiles} />
+
           <PrivateRoute exact path="/matchme" component={MatchPage} />
+          <PrivateRoute exact path="/mymatches" component={MyMatches} />
           <PrivateRoute exact path="/mymessages" component={MyMessages} />
           <Route path="/register">
             <RegistrationForm />

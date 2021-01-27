@@ -35,7 +35,10 @@ const Chat = ({ sendTo }) => {
         console.log(res);
         realTime(res.data.data[0]);
 
-        if (params.pathname.includes("/allprofiles/")) {
+        if (
+          params.pathname.includes("/allprofiles/") ||
+          params.pathname.includes("/mymatches")
+        ) {
           dispatch({
             type: "CHANGE_CONVERSATION_ID",
             action: Number(res.data.data[0].conversation_id),
@@ -59,10 +62,9 @@ const Chat = ({ sendTo }) => {
         conversationID: params.pathname.includes("/allprofiles/")
           ? event.conversation_id
           : conversationIDREDUX,
-        chatimage:
-          myprofileImage.images !== null
-            ? myprofileImage.images[0]
-            : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png",
+        chatimage: myprofileImage.images
+          ? myprofileImage.images[0]
+          : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png",
         fullname: myprofileImage.fullname,
       },
 
@@ -73,8 +75,7 @@ const Chat = ({ sendTo }) => {
         console.log(res);
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        console.log(error);
       });
   };
 

@@ -54,10 +54,14 @@ app.use(passport.session());
 const usersRoute = require("./routes/users");
 const profilesRoute = require("./routes/profiles");
 const chatRoute = require("./routes/chat");
+const matchRoute = require("./routes/matches");
+const notificationRoute = require("./routes/notifications");
 
 app.use("/users", usersRoute);
 app.use("/profiles", profilesRoute);
 app.use("/chat", chatRoute);
+app.use("/matches", matchRoute);
+app.use("/notifications", notificationRoute);
 app.get("/getcookie", (req, res) => {
   if (req.isAuthenticated()) {
     res

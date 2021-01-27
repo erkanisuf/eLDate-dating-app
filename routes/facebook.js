@@ -1,6 +1,7 @@
 const User = require("../models/usersModel");
 const bcrypt = require("bcrypt");
 const moment = require("moment");
+const pool = require("../db");
 module.exports = function (app, passport, FacebookStrategy) {
   passport.serializeUser((user, cb) => {
     cb(null, user);
@@ -44,19 +45,26 @@ module.exports = function (app, passport, FacebookStrategy) {
 
         if (!findUser.rows.length) {
           let hashedPasssword = await bcrypt.hash(profile._json.id, 12);
-          const newuser = await new User(
-            hashedPasssword,
-            hashedPasssword,
-            profile._json.email,
-            2, // this 2 means its facebook made in DB
 
-            dateBorn,
-            profile._json.name
+          const saveFBUSER = await pool.query(
+            `WITH ins1 AS(INSERT INTO userstable(username,password,email,created_on,typereg_id)
+          VALUES($1,$2,$3,CURRENT_TIMESTAMP,$4)
+         RETURNING user_id)
+            INSERT INTO profile (userlog_id, age,fullname)
+            SELECT user_id, $5,$6 FROM ins1
+            RETURNING *`,
+            [
+              hashedPasssword,
+              hashedPasssword,
+              profile._json.email,
+              2, // this 2 means its facebook made in DB
+
+              dateBorn,
+              profile._json.name,
+            ]
           );
 
-          const saveNew = await newuser.save();
-
-          const returnvalue = saveNew.rows[0].userlog_id;
+          const returnvalue = saveFBUSER.rows[0].userlog_id;
           return cb(null, returnvalue);
         } else {
           const checkUsername = await bcrypt.compareSync(
