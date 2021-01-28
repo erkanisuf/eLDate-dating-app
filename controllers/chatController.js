@@ -125,7 +125,7 @@ exports.getMyChat = async (req, res) => {
 
   try {
     const getAllmessagesofTHisChat = await pool.query(
-      `SELECT conversation_id,created_at,sender_id,message,fullname,images  FROM messages 
+      `SELECT conversation_id,messages.created_at,sender_id,message,fullname,images  FROM messages 
       INNER JOIN profile
       ON profile.userlog_id = messages.sender_id
       WHERE conversation_id=$1`,

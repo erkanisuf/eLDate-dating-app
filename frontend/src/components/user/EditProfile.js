@@ -120,7 +120,7 @@ export const EditProfile = () => {
     setTabLevel(key);
   }
   return (
-    <div>
+    <div style={{ marginTop: "25px" }}>
       <Button
         type="primary"
         onClick={showModal}

@@ -28,3 +28,16 @@ exports.singleProfile = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.latestProfiles = async (req, res) => {
+  try {
+    const latestProfiles = await pool.query(
+      "SELECT profile_id,fullname,images FROM profile ORDER BY created_at DESC LIMIT $1",
+      [5]
+    );
+
+    res.json(latestProfiles.rows);
+  } catch (err) {
+    console.log(err);
+  }
+};
