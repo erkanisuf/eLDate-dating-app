@@ -131,15 +131,6 @@ const Layout = (props) => {
                   style={{
                     color: "white",
                   }}
-                  to="/mymatches"
-                >
-                  <HomeOutlined />
-                  My Matches
-                </Link>
-                <Link
-                  style={{
-                    color: "white",
-                  }}
                   to="/"
                 >
                   <HomeOutlined />

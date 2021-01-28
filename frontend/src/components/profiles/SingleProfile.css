@@ -6,8 +6,9 @@
 }
 
 .imageGridEl {
+  padding-top: 30px;
   grid-column: 1/2;
-  grid-row: 2/3;
+  grid-row: 1/2;
 }
 
 .descriptions {

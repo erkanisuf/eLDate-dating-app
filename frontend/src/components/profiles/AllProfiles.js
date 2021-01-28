@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import { usenullOrEmpty } from "../../CustomHook/chekifNull";
+import moment from "moment";
 //ANT DESIGN
 import { Avatar, Card, Spin } from "antd";
 const AllProfiles = () => {
@@ -24,6 +25,7 @@ const AllProfiles = () => {
         console.log(err);
       });
   }, []);
+  console.log(allprofiles);
   if (!allprofiles.length) {
     return <Spin size="large" />;
   }
@@ -65,7 +67,15 @@ const AllProfiles = () => {
                 }
               >
                 <Meta
-                  title={el.nickname ? el.nickname : el.fullname}
+                  title={
+                    <div>
+                      {el.nickname ? el.nickname : el.fullname},
+                      <p style={{ fontSize: "12px", color: "#ccc" }}>
+                        {moment(el.age, "YYYYMMDD").fromNow(true)}
+                      </p>
+                    </div>
+                  }
+                  // {moment(el.age, "YYYYMMDD").fromNow(true)}
                   description={usenullOrEmpty(el.city)}
                 />
               </Card>

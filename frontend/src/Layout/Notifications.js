@@ -27,8 +27,7 @@ const Notifications = () => {
         }
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        console.log(error);
       });
   }, [dispatch, openID]);
   return (

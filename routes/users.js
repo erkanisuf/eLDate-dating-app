@@ -131,4 +131,7 @@ router.put(
   usersController.editProfile
 );
 //---end
+//GET my album
+router.get("/getmyalbum", isLogedin, usersController.getAlbums);
+//---end
 module.exports = router;

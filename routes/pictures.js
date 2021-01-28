@@ -60,6 +60,13 @@ router.post(
   upload.array("albumImage", 10),
   picturesController.uploadAlbums
 );
+router.delete(
+  "/deletealbumitem",
+  isLogedin,
+  picturesController.deleteAlbumImage
+);
+module.exports = router;
+router.put("/albumtoProfile", isLogedin, picturesController.albumToProfilePic);
 module.exports = router;
 
 // upload.single("productImage"),

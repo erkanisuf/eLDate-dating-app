@@ -4,7 +4,11 @@ import Axios from "axios";
 import TinderCard from "react-tinder-card";
 import "./MatchPage.css";
 import { Button, Alert, Spin } from "antd";
-import { HeartTwoTone, FrownOutlined } from "@ant-design/icons";
+import {
+  HeartTwoTone,
+  FrownOutlined,
+  PlayCircleOutlined,
+} from "@ant-design/icons";
 import moment from "moment"; // moment
 function MatchPage() {
   const [db, setDB] = useState([]);
@@ -29,6 +33,7 @@ function MatchPage() {
       .catch((err) => {
         console.log(err);
       });
+    return () => {};
   }, [retrigger]);
 
   const insertInMatches = (param) => {
@@ -82,7 +87,7 @@ function MatchPage() {
 
   if (!characters.length) {
     return <Spin size="large" />;
-  } else if (childRefs.length <= 4) {
+  } else if (childRefs.length <= 1) {
     return (
       <h1>
         Press here to start!
@@ -111,9 +116,10 @@ function MatchPage() {
               }}
               className="card"
             >
-              <h3>
+              <h3 style={{ width: "100%", fontSize: "15px" }}>
                 {character.fullname},
-                {moment(character.age, "YYYYMMDD").fromNow(true)}
+                {moment(character.age, "YYYYMMDD").fromNow(true)},
+                {character.sex}
               </h3>
             </div>
             <div className="buttons">
@@ -154,6 +160,14 @@ function MatchPage() {
           </h2>
         )}
       </div>
+      <Button
+        icon={<PlayCircleOutlined />}
+        className="startmatchAgain"
+        onClick={() => window.location.reload()}
+      >
+        {" "}
+        Start matching from beginning?
+      </Button>
     </div>
   );
 }

@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
+.HomePageContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.contentStyle {
+  grid-column: 1/3;
+  width: 100%;
+  color: rgb(184, 126, 231);
+
+  font-size: 50px;
+  line-height: 160px;
+  text-align: center;
+  background-color: #57a1f9;
+  background-image: linear-gradient(180deg, #f1bced 0%, #ffffff 100%);
+  padding: 100px;
+  font-family: "Monoton", cursive;
+}
+
+.carouselDIV {
+  grid-column: 1/3;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 900px;
+  overflow: hidden;
+}
+.signUpNow {
+  width: 400px;
+  height: 300px;
+  border: 1px solid rgb(150, 35, 92);
+  border-radius: 15px;
+}
+.latestUsers {
+  width: 400px;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+}

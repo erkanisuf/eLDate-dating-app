@@ -21,12 +21,29 @@ function shuffle(array) {
 }
 exports.arrayMatches = async (req, res, next) => {
   try {
+    const myProfileSex = await pool.query(
+      "SELECT searching FROM profile where userlog_id = $1 ",
+      [req.user]
+    );
+    console.log(myProfileSex.rows[0].searching);
     const getProfiles = await pool.query(
       "SELECT userlog_id,fullname,nickname,age,sex,images FROM profile ",
       []
     );
     const defilter = getProfiles.rows.filter((el) => el.userlog_id != req.user);
-    const mixedArr = shuffle(defilter);
+    let result;
+
+    if (!myProfileSex.rows[0].searching) {
+      result = defilter;
+    } else if (myProfileSex.rows[0].searching === "Other") {
+      result = defilter;
+    } else {
+      const mix = [...defilter].filter(
+        (el) => el.sex === myProfileSex.rows[0].searching
+      );
+      result = mix;
+    }
+    const mixedArr = shuffle(result);
 
     return res.status(200).json(mixedArr);
   } catch (err) {

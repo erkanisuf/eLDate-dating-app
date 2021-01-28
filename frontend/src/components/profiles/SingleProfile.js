@@ -127,22 +127,11 @@ const SingleProfile = () => {
 
           <div style={{ borderBottom: "1px solid #E99AF2c", padding: "15px" }}>
             <Image.PreviewGroup>
-              <Image
-                width={75}
-                src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-              />
-              <Image
-                width={75}
-                src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-              />
-              <Image
-                width={75}
-                src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-              />
-              <Image
-                width={75}
-                src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-              />
+              {profile[0].album.length
+                ? profile[0].album.map((el, index) => {
+                    return <Image width={75} height={75} src={el} key={el} />;
+                  })
+                : "User hasnt added yet any album photos!"}
             </Image.PreviewGroup>
           </div>
         </div>

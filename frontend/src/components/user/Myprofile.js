@@ -2,16 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 //ANT DESIGN
 import { Avatar, Typography, Divider } from "antd";
-import UploadImage from "./UploadImage";
-import Myalbum from "./Myalbum";
+
 const Myprofile = () => {
   const { Title, Text } = Typography; // ANT DESIGN
   const myprofileREDUX = useSelector((state) => state.myProfileReducer);
 
   return (
     <div>
-      <UploadImage />
-      <Myalbum />
       <Avatar
         style={{ border: "1px solid #003a8c" }}
         size={130}

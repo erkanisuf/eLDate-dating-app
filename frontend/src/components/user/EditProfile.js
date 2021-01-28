@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import moment from "moment";
+import UploadImage from "./UploadImage";
+import Myalbum from "./Myalbum";
 // ANT
-import { Input, Button, Modal, Select, DatePicker } from "antd";
+import { Input, Button, Modal, Select, DatePicker, Tabs } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { useLocation, useHistory } from "react-router-dom"; // ROUTER
 //REDUX
@@ -10,9 +12,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 export const EditProfile = () => {
   const location = useLocation(); //ROUTER
-  console.log(location, "PARAM");
+
   const history = useHistory(); // ROUTER
   const { Option } = Select;
+  const [tablevel, setTabLevel] = useState(1); // ANT TABS
+  const { TabPane } = Tabs; // ANT
   const { TextArea } = Input; // ANT
   const [isModalVisible, setIsModalVisible] = useState(
     location.pathname === "/updatemyprofile" ? true : false
@@ -53,7 +57,7 @@ export const EditProfile = () => {
     });
     setError([]);
   }, [myprofileREDUX]);
-  console.log("formSEX", form);
+
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
@@ -110,7 +114,11 @@ export const EditProfile = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
+  // ANT TAB
+  function callback(key) {
+    console.log(key);
+    setTabLevel(key);
+  }
   return (
     <div>
       <Button
@@ -140,171 +148,188 @@ export const EditProfile = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <div
-          style={{
-            display: "flex",
-            width: "80%",
-            justifyContent: "space-between",
-            flexDirection: "column",
-          }}
-        >
-          <form onSubmit={handleSubmit}>
-            <label>
-              Fullname
-              <Input
-                placeholder="First and Second name"
-                type="text"
-                name="fullname"
-                value={form.fullname}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Genre
-              <Input.Group compact>
-                <Select
-                  style={{ width: "100%" }}
-                  name="sex"
-                  placeholder="First and Second name"
-                  defaultValue={form.sex}
-                  value={form.sex}
-                  onChange={(e) => {
-                    setForm({ ...form, sex: e });
-                  }}
-                >
-                  <Option value="Male">Male</Option>
-                  <Option value="Woman">Woman</Option>
-                  <Option value="Other">Other</Option>
-                </Select>
-              </Input.Group>
-            </label>
-            <label>
-              Nickname
-              <Input
-                type="text"
-                name="nickname"
-                value={form.nickname}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              About me
-              <TextArea
-                type="text"
-                name="description"
-                value={form.description}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Relationship
-              <Input.Group compact>
-                <Select
-                  style={{ width: "100%" }}
-                  name="relationship"
-                  placeholder="Relationship status"
-                  defaultValue={form.relationship}
-                  value={form.relationship}
-                  onChange={(e) => {
-                    setForm({ ...form, relationship: e });
-                  }}
-                >
-                  <Option value="Single">Single</Option>
-                  <Option value="In relationship">In relationship</Option>
-                  <Option value="Married">Married</Option>
-                  <Option value="Other">Other</Option>
-                </Select>
-              </Input.Group>
-            </label>
-            <label>
-              Interested in
-              <Input.Group compact>
-                <Select
-                  style={{ width: "100%" }}
-                  name="searching"
-                  placeholder="Looking for ...."
-                  defaultValue={form.searching}
-                  value={form.searching}
-                  onChange={(e) => {
-                    setForm({ ...form, searching: e });
-                  }}
-                >
-                  <Option value="Male">Male</Option>
-                  <Option value="Woman">Woman</Option>
-                  <Option value="Other">Other</Option>
-                </Select>
-              </Input.Group>
-            </label>
-
-            <label>
-              Height
-              <Input
-                type="text"
-                name="height"
-                value={form.height}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Weight
-              <Input
-                type="text"
-                name="weight"
-                value={form.weight}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              City
-              <Input
-                type="text"
-                name="city"
-                value={form.city}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Country
-              <Input
-                type="text"
-                name="country"
-                value={form.country}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Year when im born
-              <p>
-                Your current age:{" "}
-                {moment(myprofileREDUX.age, "YYYYMMDD").fromNow(true)}
-              </p>
-              <DatePicker
-                type="date"
-                name="age"
-                // onChange={handleChange}
-                onChange={(e) =>
-                  setForm({ ...form, age: moment(e).format("YYYY-MM-DD") })
-                }
-              />
-            </label>
-            <Button
-              type="submit"
-              value="Save"
-              className="btnsave"
-              onClick={handleSubmit}
+        <Tabs defaultActiveKey={tablevel} onChange={callback}>
+          <TabPane tab="Profile Details" key="1">
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                display: "flex",
+                width: "80%",
+                justifyContent: "space-between",
+                flexDirection: "column",
+              }}
             >
-              Save
-            </Button>
-          </form>
-          {error.errors &&
-            error.errors.map((el, index) => {
-              return (
-                <div key={index} style={{ color: "red" }}>
-                  {el.param} : {el.msg}
-                </div>
-              );
-            })}
-        </div>
+              <label>
+                Fullname
+                <Input
+                  placeholder="First and Second name"
+                  type="text"
+                  name="fullname"
+                  value={form.fullname}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                Genre
+                <Input.Group compact>
+                  <Select
+                    style={{ width: "100%" }}
+                    name="sex"
+                    placeholder="First and Second name"
+                    defaultValue={form.sex}
+                    value={form.sex}
+                    onChange={(e) => {
+                      setForm({ ...form, sex: e });
+                    }}
+                  >
+                    <Option value="Male">Male</Option>
+                    <Option value="Woman">Woman</Option>
+                    <Option value="Other">Other</Option>
+                  </Select>
+                </Input.Group>
+              </label>
+              <label>
+                Nickname
+                <Input
+                  type="text"
+                  name="nickname"
+                  value={form.nickname}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                About me
+                <TextArea
+                  type="text"
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                Relationship
+                <Input.Group compact>
+                  <Select
+                    style={{ width: "100%" }}
+                    name="relationship"
+                    placeholder="Relationship status"
+                    defaultValue={form.relationship}
+                    value={form.relationship}
+                    onChange={(e) => {
+                      setForm({ ...form, relationship: e });
+                    }}
+                  >
+                    <Option value="Single">Single</Option>
+                    <Option value="In relationship">In relationship</Option>
+                    <Option value="Married">Married</Option>
+                    <Option value="Other">Other</Option>
+                  </Select>
+                </Input.Group>
+              </label>
+              <label>
+                Interested in
+                <Input.Group compact>
+                  <Select
+                    style={{ width: "100%" }}
+                    name="searching"
+                    placeholder="Looking for ...."
+                    defaultValue={form.searching}
+                    value={form.searching}
+                    onChange={(e) => {
+                      setForm({ ...form, searching: e });
+                    }}
+                  >
+                    <Option value="Male">Male</Option>
+                    <Option value="Woman">Woman</Option>
+                    <Option value="Other">Other</Option>
+                  </Select>
+                </Input.Group>
+              </label>
+
+              <label>
+                Height
+                <Input
+                  type="text"
+                  name="height"
+                  value={form.height}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                Weight
+                <Input
+                  type="text"
+                  name="weight"
+                  value={form.weight}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                City
+                <Input
+                  type="text"
+                  name="city"
+                  value={form.city}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                Country
+                <Input
+                  type="text"
+                  name="country"
+                  value={form.country}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                Year when im born
+                <p>
+                  Your current age:{" "}
+                  {moment(myprofileREDUX.age, "YYYYMMDD").fromNow(true)}
+                </p>
+                <DatePicker
+                  type="date"
+                  name="age"
+                  // onChange={handleChange}
+                  onChange={(e) =>
+                    setForm({ ...form, age: moment(e).format("YYYY-MM-DD") })
+                  }
+                />
+              </label>
+              <Button
+                type="submit"
+                value="Save"
+                className="btnsave"
+                onClick={handleSubmit}
+              >
+                Save
+              </Button>
+            </form>
+            {error.errors &&
+              error.errors.map((el, index) => {
+                return (
+                  <div key={index} style={{ color: "red" }}>
+                    {el.param} : {el.msg}
+                  </div>
+                );
+              })}
+          </TabPane>
+          <TabPane tab="Pictures managment" key="2">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+              }}
+            >
+              <h2 style={{ textAlign: "center" }}>Profile Picture</h2>
+              <UploadImage />
+              <h2 style={{ textAlign: "center" }}>Albums Photo</h2>
+              <Myalbum />
+            </div>
+          </TabPane>
+        </Tabs>
       </Modal>
     </div>
   );

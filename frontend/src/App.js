@@ -12,7 +12,7 @@ import RedirectProfile from "./components/user/RedirectProfile";
 import ForgotPassword from "./components/user/ForgotPassword";
 import ResetPassword from "./components/user/ResetPassword";
 import MatchPage from "./components/match/MatchPage";
-
+import Home from "./components/Home/Home";
 import MyMatches from "./components/match/MyMatches";
 
 function App() {
@@ -29,12 +29,6 @@ function App() {
             </div>
           </Route>
 
-          <PrivateRoute path="/allprofiles/:id" component={SingleProfile} />
-          <PrivateRoute exact path="/allprofiles" component={AllProfiles} />
-
-          <PrivateRoute exact path="/matchme" component={MatchPage} />
-          <PrivateRoute exact path="/mymatches" component={MyMatches} />
-          <PrivateRoute exact path="/mymessages" component={MyMessages} />
           <Route path="/register">
             <RegistrationForm />
           </Route>
@@ -44,9 +38,17 @@ function App() {
           <Route path="/resetpassword/:id">
             <ResetPassword />
           </Route>
+          <PrivateRoute path="/allprofiles/:id" component={SingleProfile} />
+          <PrivateRoute exact path="/allprofiles" component={AllProfiles} />
+
+          <PrivateRoute exact path="/matchme" component={MatchPage} />
+          <PrivateRoute exact path="/mymatches" component={MyMatches} />
+          <PrivateRoute exact path="/mymessages" component={MyMessages} />
           <PrivateRoute path="/updatemyprofile" component={RedirectProfile} />
 
-          <Route path="/"></Route>
+          <Route path="/">
+            <Home />
+          </Route>
           {/* Router */}
         </Switch>
       </Layout>

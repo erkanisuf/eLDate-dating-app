@@ -47,6 +47,18 @@ exports.newUser = async (req, res, next) => {
   }
 };
 
+exports.getAlbums = async (req, res) => {
+  try {
+    const myalbum = await pool.query(
+      "SELECT album FROM profile WHERE userlog_id=$1",
+      [req.user]
+    );
+    res.json({ data: myalbum.rows[0] });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.getUser = async (req, res) => {
   console.log(req.user);
   const userFind = await User.findProfile(req.user);
