@@ -1,0 +1,14 @@
+.filtersGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.filtersGroup p {
+  font-style: bold;
+  font-weight: 650;
+  margin: 15px 0;
+}
+.filtersGroup button {
+  width: 50%;
+  align-self: center;
+}

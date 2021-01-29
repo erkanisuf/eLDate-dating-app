@@ -67,7 +67,7 @@ router.post("/message/send", async (req, res) => {
     message: req.body.message,
     created_at: new Date(), // LATER FIX THIS TO BE CURRENT TIME WHEN ITS SEND ----------------------------"2021-01-15T01:20:18.323Z",
     sender_id: req.user,
-    images: req.body.chatimage,
+    images: [req.body.chatimage],
     fullname: req.body.fullname,
   });
 

@@ -146,14 +146,14 @@ const GetInsideMessages = ({
                   }}
                   icon={
                     <img
-                      src={
-                        el.images
-                          ? el.images
-                          : el.images[0]
-                          ? el.images[0]
-                          : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
-                      }
-                      // src="https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
+                      // src={
+                      //   el.images
+                      //     ? el.images
+                      //     : el.images[0]
+                      //     ? el.images[0]
+                      //     : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png"
+                      // }
+                      src={el.images[0]}
                       alt="avatar"
                       width="150px"
                     />

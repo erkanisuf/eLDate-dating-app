@@ -41,3 +41,24 @@ exports.latestProfiles = async (req, res) => {
     console.log(err);
   }
 };
+
+//Filter
+exports.filterProfiles = async (req, res) => {
+  const {
+    theyAre,
+    theyLook,
+    relationshipStatus,
+    ageFrom,
+    ageTo,
+    heightFrom,
+    heightTo,
+    weightFrom,
+    weightTo,
+  } = req.body;
+
+  try {
+    res.status(200).json({ message: "Filtered" });
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -62,7 +62,7 @@ const Chat = ({ sendTo }) => {
         conversationID: params.pathname.includes("/allprofiles/")
           ? event.conversation_id
           : conversationIDREDUX,
-        chatimage: myprofileImage.images
+        chatimage: myprofileImage.images[0]
           ? myprofileImage.images[0]
           : "https://www.pngitem.com/pimgs/m/581-5813504_avatar-dummy-png-transparent-png.png",
         fullname: myprofileImage.fullname,
