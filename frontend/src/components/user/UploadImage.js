@@ -108,6 +108,7 @@ const UploadImage = () => {
       >
         <input type="file" name="profileImage" onChange={onChangeImage} />
         <Button
+          type="primary"
           icon={loading ? <LoadingOutlined /> : <PlusOutlined />}
           onClick={changeProfileImage}
         >

@@ -128,9 +128,9 @@ function MatchPage() {
                 onClick={() => swipe("left", index)}
               >
                 <FrownOutlined
+                  onClick={() => swipe("left", index)}
                   style={{
                     fontSize: window.innerWidth <= 768 ? "15px" : "50px",
-                    zIndex: 3,
                   }}
                 />
                 NOT
@@ -140,9 +140,9 @@ function MatchPage() {
                 onClick={() => swipe("right", index)}
               >
                 <HeartTwoTone
+                  onClick={() => swipe("right", index)}
                   style={{
                     fontSize: window.innerWidth <= 768 ? "15px" : "50px",
-                    zIndex: 3,
                   }}
                   spin={true}
                   twoToneColor="#f1bcd9"

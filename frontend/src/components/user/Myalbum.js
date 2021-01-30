@@ -145,6 +145,7 @@ const Myalbum = () => {
             multiple
           />
           <Button
+            type="primary"
             icon={loading ? <LoadingOutlined /> : <PlusOutlined />}
             onClick={changeProfileImage}
           >
