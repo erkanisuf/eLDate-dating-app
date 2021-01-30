@@ -92,11 +92,11 @@ router.get(
 router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {
-    failureRedirect: "http://localhost:3000/login",
+    failureRedirect: process.env.FACEBOOK_REDIRECT,
   }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect("http://localhost:3000");
+    res.redirect(process.env.FACEBOOK_FAIL);
   }
 );
 router.get("/logout", (req, res, next) => {
