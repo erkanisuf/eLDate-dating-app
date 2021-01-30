@@ -35,7 +35,6 @@ const Layout = (props) => {
       url: `https://dateappeldate.herokuapp.com/getcookie`,
     })
       .then((res) => {
-        console.log(res, "dispardq");
         if (res.status === 200) {
           dispatch({ type: "CHECK_IF_LOGGED_IN", action: true });
         }
@@ -77,7 +76,6 @@ const Layout = (props) => {
       url: `https://dateappeldate.herokuapp.com/chat/getmyconversations`,
     })
       .then((res) => {
-        console.log(res);
         // setMyMessages(res.data);
         dispatch({ type: "FETCH_MY_CONVERSATIONS", action: res.data });
       })
@@ -94,7 +92,6 @@ const Layout = (props) => {
       withCredentials: true,
       url: "https://dateappeldate.herokuapp.com/users/logout",
     }).then((res) => {
-      console.log(res, "ko praq");
       if (res.status === 200) {
         dispatch({
           type: "RESET_PROFILE",

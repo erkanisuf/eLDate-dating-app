@@ -15,16 +15,13 @@ const Filters = ({ filterProfiles }) => {
     weightTo: 180,
   });
   const onChangeTheyAre = (e) => {
-    console.log(e.target.value);
     setFilter({ ...filter, theyAre: e.target.value });
   };
 
   const onChangeTheyLook = (e) => {
-    console.log(e.target.value);
     setFilter({ ...filter, theyLook: e.target.value });
   };
   const onChangeTheirStatus = (e) => {
-    console.log(e.target.value);
     setFilter({ ...filter, relationshipStatus: e.target.value });
   };
 
@@ -42,15 +39,12 @@ const Filters = ({ filterProfiles }) => {
 
   //Slider
   const onChangeAge = (e) => {
-    console.log(e);
     setFilter({ ...filter, ageFrom: e[0], ageTo: e[1] });
   };
   const onChangeHeight = (e) => {
-    console.log(e);
     setFilter({ ...filter, heightFrom: e[0], heightTo: e[1] });
   };
   const onChangeWeight = (e) => {
-    console.log(e);
     setFilter({ ...filter, heightFrom: e[0], heightTo: e[1] });
   };
   // MODAL
@@ -66,7 +60,6 @@ const Filters = ({ filterProfiles }) => {
     setIsModalVisible(false);
   };
 
-  console.log(filter);
   return (
     <div>
       <Button type="primary" onClick={showModal}>

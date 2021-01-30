@@ -38,7 +38,6 @@ const GetInsideMessages = ({
 
     const channel = pusher.subscribe("private-" + conversationID);
     channel.bind("messages", (newmessage) => {
-      console.log(newmessage);
       setSendMessages([...SendMessages, newmessage]);
     });
 
@@ -59,7 +58,6 @@ const GetInsideMessages = ({
       }`,
     })
       .then((res) => {
-        console.log(res);
         setSendMessages(res.data);
       })
       .catch((error) => {

@@ -10,7 +10,6 @@ const UploadImage = () => {
   const [image, setImage] = useState({ file: "" });
   const myprofileREDUX = useSelector((state) => state.myProfileReducer);
   const onChangeImage = (e) => {
-    console.log(e.target.files[0]);
     beforeUpload(e.target.files[0]);
     setImage({ file: e.target.files });
   };
@@ -39,7 +38,6 @@ const UploadImage = () => {
       url: "https://dateappeldate.herokuapp.com/pictures/addprofilepicture",
     })
       .then((res) => {
-        console.log(res);
         //res.data.data[0].images[0]
         if (res.status === 200) {
           setLoading(false);
@@ -49,7 +47,6 @@ const UploadImage = () => {
         }
       })
       .catch((error) => {
-        console.log(error.response.status === 500);
         message.error("You can only upload JPG/PNG file!");
         message.error("Image must smaller than 2MB!");
       });

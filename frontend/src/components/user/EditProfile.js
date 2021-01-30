@@ -39,7 +39,7 @@ export const EditProfile = () => {
     country: myprofileREDUX.country,
     age: myprofileREDUX.age,
   });
-  console.log("age", typeof myprofileREDUX.age);
+
   useEffect(() => {
     setForm({
       fullname: myprofileREDUX.fullname,
@@ -85,19 +85,16 @@ export const EditProfile = () => {
       url: "https://dateappeldate.herokuapp.com/users/updateprofile",
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           dispatch({ type: "RE_TRIGGER" });
           setIsModalVisible(false);
           if (location.pathname === "/updatemyprofile") {
             history.push("/");
-            console.log("WTF IS GOING ON");
           }
         }
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data, "errors");
+        console.log(error);
         setError(error.response.data);
       });
   };
@@ -116,7 +113,6 @@ export const EditProfile = () => {
   };
   // ANT TAB
   function callback(key) {
-    console.log(key);
     setTabLevel(key);
   }
   return (

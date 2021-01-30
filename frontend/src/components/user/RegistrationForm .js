@@ -37,7 +37,6 @@ export const RegistrationForm = () => {
       url: "https://dateappeldate.herokuapp.com/users/newuser",
     })
       .then((res) => {
-        console.log(res, "GOOD REG");
         if (res.status === 200) {
           setForm({
             email: "",
@@ -53,12 +52,10 @@ export const RegistrationForm = () => {
         }
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        console.log(error);
         setError(error.response.data.errors);
       });
   };
-  console.log(error);
 
   return (
     <div style={{ margin: "0 auto", height: "700px", width: "100%" }}>

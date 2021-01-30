@@ -29,10 +29,9 @@ const Chat = ({ sendTo }) => {
         text: form.text,
       },
       withCredentials: true,
-      url: `http://localhost:4000/chat/startconversation/${sendTo}`,
+      url: `https://dateappeldate.herokuapp.com/chat/startconversation/${sendTo}`,
     })
       .then((res) => {
-        console.log(res);
         realTime(res.data.data[0]);
 
         if (
@@ -69,11 +68,9 @@ const Chat = ({ sendTo }) => {
       },
 
       withCredentials: true,
-      url: `http://localhost:4000/chat/message/send`,
+      url: `https://dateappeldate.herokuapp.com/chat/message/send`,
     })
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((error) => {
         console.log(error);
       });

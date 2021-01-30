@@ -16,7 +16,7 @@ const Myalbum = () => {
   const [profileLoading, setProfileLoading] = useState(false); // loading when make profil pic
 
   const [image, setImage] = useState({ file: "" });
-  console.log("albm", image);
+
   const onChangeImage = (e) => {
     const thearrimg = e.target.files;
 
@@ -53,7 +53,6 @@ const Myalbum = () => {
       url: "https://dateappeldate.herokuapp.com/pictures/addtoalbum",
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setLoading(false);
           message.success("Sucsessfuly added !");

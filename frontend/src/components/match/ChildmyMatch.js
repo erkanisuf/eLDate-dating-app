@@ -26,7 +26,6 @@ const ChildmyMatch = ({ matchID }) => {
         console.log(err);
       });
   }, [matchID]);
-  console.log("WTF IS THIS HIST", profile);
 
   // ANT MODAL
   const showModal = () => {

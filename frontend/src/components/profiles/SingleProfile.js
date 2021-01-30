@@ -29,7 +29,7 @@ const SingleProfile = () => {
 
   const params = useParams(); //Router
   const [profile, setProfile] = useState([]);
-  console.log(profile);
+
   useEffect(() => {
     const findConversation = (data) => {
       const filterArray = myConversationRedux.filter(
@@ -96,7 +96,6 @@ const SingleProfile = () => {
       url: "https://dateappeldate.herokuapp.com/matches/insertmatch",
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setBadge(true);
         }

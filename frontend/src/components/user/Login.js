@@ -19,7 +19,6 @@ const Login = ({ closeNav }) => {
     window.location = "https://dateappeldate.herokuapp.com/users/auth/facebook";
   };
   const handleChange = (event) => {
-    console.log(event.target.name);
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
@@ -37,7 +36,6 @@ const Login = ({ closeNav }) => {
       url: "https://dateappeldate.herokuapp.com/users/login",
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           dispatch({ type: "CHECK_IF_LOGGED_IN", action: true });
           dispatch({ type: "RE_TRIGGER" });
@@ -48,11 +46,11 @@ const Login = ({ closeNav }) => {
       .catch((error) => {
         // console.log(error.response.status); // 401
         // console.log(error.response.data.message);
-        // if (error.response.data.message) {
-        //   setError(error.response.data.message);
-        // } else if (error.response.data.errors[0].msg) {
-        //   setError(error.response.data.errors[0].msg);
-        // }
+        if (error.response.data.message) {
+          setError(error.response.data.message);
+        } else if (error.response.data.errors[0].msg) {
+          setError(error.response.data.errors[0].msg);
+        }
         console.log(error);
         // console.log("xD", error.response.data.errors.errors[0].msg);
       });

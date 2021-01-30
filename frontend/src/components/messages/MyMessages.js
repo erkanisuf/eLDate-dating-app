@@ -28,12 +28,9 @@ const MyMessages = () => {
         withCredentials: true,
         url: `https://dateappeldate.herokuapp.com/notifications/readmsgnotifications`,
       })
-        .then((res) => {
-          console.log(res);
-        })
+        .then((res) => {})
         .catch((error) => {
-          console.log(error.response.status); // 401
-          console.log(error.response.data);
+          console.log(error);
         });
     },
     [dispatch]
@@ -48,14 +45,12 @@ const MyMessages = () => {
       url: `https://dateappeldate.herokuapp.com/chat/getmyconversations`,
     })
       .then((res) => {
-        console.log(res);
         // setMyMessages(res.data);
         dispatch({ type: "FETCH_MY_CONVERSATIONS", action: res.data });
         // handleOpen(res.data[0].conversation_id);
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        console.log(error);
       });
   }, [handleOpen, dispatch]);
 

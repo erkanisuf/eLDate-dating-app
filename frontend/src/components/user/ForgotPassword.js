@@ -8,7 +8,6 @@ const ForgotPassword = () => {
   const [error, setError] = useState([]);
   const [success, setSuccess] = useState("");
   const handleChange = (event) => {
-    console.log(event.target.name);
     setForm({ ...form, [event.target.name]: event.target.value });
   };
   const handleSubmit = (event) => {
@@ -24,7 +23,6 @@ const ForgotPassword = () => {
       url: "https://dateappeldate.herokuapp.com/users/forgotpassword",
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setError([]);
           setSuccess(res.data.message);

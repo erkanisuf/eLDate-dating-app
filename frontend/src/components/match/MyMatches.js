@@ -12,7 +12,6 @@ const MyMatches = () => {
       url: "https://dateappeldate.herokuapp.com/matches/getmymatches",
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) setMymatches(res.data);
       })
       .catch((err) => {

@@ -22,7 +22,6 @@ const AllProfiles = () => {
       url: "https://dateappeldate.herokuapp.com/profiles/allprofiles",
     })
       .then((res) => {
-        console.log(res);
         setallProfiles(res.data);
       })
       .catch((err) => {
@@ -39,7 +38,6 @@ const AllProfiles = () => {
       url: "https://dateappeldate.herokuapp.com/profiles/filterProfile",
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setIsFiltered(true);
           if (!res.data.data.length) {

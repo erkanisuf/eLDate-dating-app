@@ -6,12 +6,11 @@ import { useParams } from "react-router-dom"; // ROUTER
 import { Input } from "antd";
 const ResetPassword = () => {
   const location = useParams(); //ROUTER
-  console.log(location);
+
   const [form, setForm] = useState({ password: "", passwordConfirmation: "" });
   const [error, setError] = useState([]);
   const [success, setSuccess] = useState("");
   const handleChange = (event) => {
-    console.log(event.target.name);
     setForm({ ...form, [event.target.name]: event.target.value });
   };
   const handleSubmit = (event) => {
@@ -28,14 +27,12 @@ const ResetPassword = () => {
       url: `https://dateappeldate.herokuapp.com/users/resetpassword/${location.id}`,
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setError([]);
           setSuccess(res.data.message);
         }
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
         setSuccess("");
         if (error.response.data.message) {
           setError(error.response.data.message);

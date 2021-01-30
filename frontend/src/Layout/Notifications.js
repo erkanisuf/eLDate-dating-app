@@ -21,7 +21,6 @@ const Notifications = ({ closeNav }) => {
       url: `https://dateappeldate.herokuapp.com/notifications/getmsgnotifications`,
     })
       .then((res) => {
-        console.log(res, "dispardq");
         if (res.status === 200) {
           dispatch({ type: "MESSAGE_NOTIFICATIONS", action: res.data });
         }

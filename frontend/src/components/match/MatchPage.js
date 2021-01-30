@@ -46,9 +46,7 @@ function MatchPage() {
       withCredentials: true,
       url: "https://dateappeldate.herokuapp.com/matches/insertmatch",
     })
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -72,9 +70,8 @@ function MatchPage() {
     copy.splice(index, 1);
     setCharacters(copy);
   };
-  console.log(characters);
+
   const swipe = (dir, index) => {
-    console.log("ACTIVATION");
     setLastDirection(dir);
 
     const msgcopy = [...characters];
