@@ -38,7 +38,7 @@ const Home = () => {
       <div className="signUpNow">
         <h1>Join us now !</h1>
         <button>
-          <Link to="./register">
+          <Link to="/register">
             <RightCircleOutlined /> Sign up{" "}
           </Link>
         </button>
