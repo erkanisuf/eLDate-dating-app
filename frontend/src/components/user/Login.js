@@ -16,7 +16,7 @@ const Login = ({ closeNav }) => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const faceboookLogin = () => {
-    window.location = "http://localhost:4000/users/auth/facebook";
+    window.location = "https://dateappeldate.herokuapp.com/users/auth/facebook";
   };
   const handleChange = (event) => {
     console.log(event.target.name);
@@ -34,7 +34,7 @@ const Login = ({ closeNav }) => {
         password: form.password,
       },
       withCredentials: true,
-      url: "http://localhost:4000/users/login",
+      url: "https://dateappeldate.herokuapp.com/users/login",
     })
       .then((res) => {
         console.log(res);
@@ -48,11 +48,12 @@ const Login = ({ closeNav }) => {
       .catch((error) => {
         // console.log(error.response.status); // 401
         // console.log(error.response.data.message);
-        if (error.response.data.message) {
-          setError(error.response.data.message);
-        } else if (error.response.data.errors[0].msg) {
-          setError(error.response.data.errors[0].msg);
-        }
+        // if (error.response.data.message) {
+        //   setError(error.response.data.message);
+        // } else if (error.response.data.errors[0].msg) {
+        //   setError(error.response.data.errors[0].msg);
+        // }
+        console.log(error);
         // console.log("xD", error.response.data.errors.errors[0].msg);
       });
   };

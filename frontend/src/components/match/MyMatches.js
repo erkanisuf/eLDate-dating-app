@@ -9,7 +9,7 @@ const MyMatches = () => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: "http://localhost:4000/matches/getmymatches",
+      url: "https://dateappeldate.herokuapp.com/matches/getmymatches",
     })
       .then((res) => {
         console.log(res);

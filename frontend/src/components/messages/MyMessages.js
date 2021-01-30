@@ -26,7 +26,7 @@ const MyMessages = () => {
         headers: { "Content-Type": "application/json" },
         data: { conversation_id: Number(id) },
         withCredentials: true,
-        url: `http://localhost:4000/notifications/readmsgnotifications`,
+        url: `https://dateappeldate.herokuapp.com/notifications/readmsgnotifications`,
       })
         .then((res) => {
           console.log(res);
@@ -45,7 +45,7 @@ const MyMessages = () => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/chat/getmyconversations`,
+      url: `https://dateappeldate.herokuapp.com/chat/getmyconversations`,
     })
       .then((res) => {
         console.log(res);

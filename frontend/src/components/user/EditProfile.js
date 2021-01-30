@@ -82,7 +82,7 @@ export const EditProfile = () => {
         age: form.age === "" ? null : form.age,
       },
       withCredentials: true,
-      url: "http://localhost:4000/users/updateprofile",
+      url: "https://dateappeldate.herokuapp.com/users/updateprofile",
     })
       .then((res) => {
         console.log(res);

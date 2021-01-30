@@ -41,7 +41,7 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     // maxAge: 15000,
     aameSite: true,
-    secure: false, // ENABLE ONLY ON HTTPS
+    secure: true, // ENABLE ONLY ON HTTPS
   },
 };
 

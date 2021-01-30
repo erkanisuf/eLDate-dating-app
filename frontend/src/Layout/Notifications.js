@@ -18,7 +18,7 @@ const Notifications = ({ closeNav }) => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/notifications/getmsgnotifications`,
+      url: `https://dateappeldate.herokuapp.com/notifications/getmsgnotifications`,
     })
       .then((res) => {
         console.log(res, "dispardq");

@@ -54,7 +54,7 @@ const SingleProfile = () => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/profiles/allprofiles/${params.id}`,
+      url: `https://dateappeldate.herokuapp.com/profiles/allprofiles/${params.id}`,
     })
       .then((res) => {
         if (res.status === 200) {
@@ -93,7 +93,7 @@ const SingleProfile = () => {
         shown_user: param,
       },
       withCredentials: true,
-      url: "http://localhost:4000/matches/insertmatch",
+      url: "https://dateappeldate.herokuapp.com/matches/insertmatch",
     })
       .then((res) => {
         console.log(res);

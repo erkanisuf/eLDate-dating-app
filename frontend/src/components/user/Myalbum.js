@@ -50,7 +50,7 @@ const Myalbum = () => {
       },
       data: form,
       withCredentials: true,
-      url: "http://localhost:4000/pictures/addtoalbum",
+      url: "https://dateappeldate.herokuapp.com/pictures/addtoalbum",
     })
       .then((res) => {
         console.log(res);
@@ -70,7 +70,7 @@ const Myalbum = () => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/users/getmyalbum`,
+      url: `https://dateappeldate.herokuapp.com/users/getmyalbum`,
     })
       .then((res) => {
         if (res.status === 200) {
@@ -89,7 +89,7 @@ const Myalbum = () => {
       headers: { "Content-Type": "application/json" },
       data: { deleteItem: param },
       withCredentials: true,
-      url: `http://localhost:4000/pictures/deletealbumitem`,
+      url: `https://dateappeldate.herokuapp.com/pictures/deletealbumitem`,
     })
       .then((res) => {
         if (res.status === 200) {
@@ -109,7 +109,7 @@ const Myalbum = () => {
       headers: { "Content-Type": "application/json" },
       data: { profileItem: param },
       withCredentials: true,
-      url: `http://localhost:4000/pictures/albumtoProfile`,
+      url: `https://dateappeldate.herokuapp.com/pictures/albumtoProfile`,
     })
       .then((res) => {
         if (res.status === 200) {

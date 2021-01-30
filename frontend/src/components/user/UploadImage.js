@@ -36,7 +36,7 @@ const UploadImage = () => {
       },
       data: form,
       withCredentials: true,
-      url: "http://localhost:4000/pictures/addprofilepicture",
+      url: "https://dateappeldate.herokuapp.com/pictures/addprofilepicture",
     })
       .then((res) => {
         console.log(res);

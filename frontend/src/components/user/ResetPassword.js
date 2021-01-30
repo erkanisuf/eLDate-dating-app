@@ -25,7 +25,7 @@ const ResetPassword = () => {
         passwordConfirmation: form.passwordConfirmation,
       },
       withCredentials: true,
-      url: `http://localhost:4000/users/resetpassword/${location.id}`,
+      url: `https://dateappeldate.herokuapp.com/users/resetpassword/${location.id}`,
     })
       .then((res) => {
         console.log(res);

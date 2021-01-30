@@ -15,7 +15,7 @@ const ChildmyMatch = ({ matchID }) => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/profiles/allprofiles/${matchID}`,
+      url: `https://dateappeldate.herokuapp.com/profiles/allprofiles/${matchID}`,
     })
       .then((res) => {
         if (res.status === 200) {

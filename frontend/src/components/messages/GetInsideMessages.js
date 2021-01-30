@@ -31,7 +31,7 @@ const GetInsideMessages = ({
 
   useEffect(() => {
     const pusher = new Pusher(`${process.env.REACT_APP_PUSHER_APP_KEY}`, {
-      authEndpoint: "http://localhost:4000/chat/pusher/auth",
+      authEndpoint: "https://dateappeldate.herokuapp.com/chat/pusher/auth",
       cluster: process.env.REACT_APP_PUSHER_CLUSTER,
       encrypted: true,
     });
@@ -54,7 +54,7 @@ const GetInsideMessages = ({
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/chat/getmessages/${
+      url: `https://dateappeldate.herokuapp.com/chat/getmessages/${
         conversationID === null ? mymessages[0].conversation_id : conversationID
       }`,
     })

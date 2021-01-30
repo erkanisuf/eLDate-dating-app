@@ -34,7 +34,7 @@ export const RegistrationForm = () => {
         age: form.age,
       },
       withCredentials: true,
-      url: "http://localhost:4000/users/newuser",
+      url: "https://dateappeldate.herokuapp.com/users/newuser",
     })
       .then((res) => {
         console.log(res, "GOOD REG");

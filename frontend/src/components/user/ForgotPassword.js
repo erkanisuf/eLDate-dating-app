@@ -21,7 +21,7 @@ const ForgotPassword = () => {
         email: form.email,
       },
       withCredentials: true,
-      url: "http://localhost:4000/users/forgotpassword",
+      url: "https://dateappeldate.herokuapp.com/users/forgotpassword",
     })
       .then((res) => {
         console.log(res);

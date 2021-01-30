@@ -24,7 +24,7 @@ function MatchPage() {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: "http://localhost:4000/matches/profiles",
+      url: "https://dateappeldate.herokuapp.com/matches/profiles",
     })
       .then((res) => {
         setDB(res.data);
@@ -44,7 +44,7 @@ function MatchPage() {
         shown_user: param,
       },
       withCredentials: true,
-      url: "http://localhost:4000/matches/insertmatch",
+      url: "https://dateappeldate.herokuapp.com/matches/insertmatch",
     })
       .then((res) => {
         console.log(res);

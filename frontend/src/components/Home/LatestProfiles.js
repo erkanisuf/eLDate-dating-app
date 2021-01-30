@@ -10,7 +10,7 @@ const LatestProfiles = () => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: "http://localhost:4000/profiles/latestprofile",
+      url: "https://dateappeldate.herokuapp.com/profiles/latestprofile",
     })
       .then((res) => {
         console.log(res);

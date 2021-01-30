@@ -19,7 +19,7 @@ const AllProfiles = () => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: "http://localhost:4000/profiles/allprofiles",
+      url: "https://dateappeldate.herokuapp.com/profiles/allprofiles",
     })
       .then((res) => {
         console.log(res);
@@ -36,7 +36,7 @@ const AllProfiles = () => {
       headers: { "Content-Type": "application/json" },
       data: param,
       withCredentials: true,
-      url: "http://localhost:4000/profiles/filterProfile",
+      url: "https://dateappeldate.herokuapp.com/profiles/filterProfile",
     })
       .then((res) => {
         console.log(res);

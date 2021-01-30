@@ -32,7 +32,7 @@ const Layout = (props) => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/getcookie`,
+      url: `https://dateappeldate.herokuapp.com/getcookie`,
     })
       .then((res) => {
         console.log(res, "dispardq");
@@ -41,8 +41,7 @@ const Layout = (props) => {
         }
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        console.log(error);
       });
   }, [reTrigger, dispatch]);
   ////
@@ -54,7 +53,7 @@ const Layout = (props) => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/users/getuser`,
+      url: `https://dateappeldate.herokuapp.com/users/getuser`,
     })
       .then((res) => {
         if (res.status === 200) {
@@ -65,8 +64,7 @@ const Layout = (props) => {
         }
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        console.log(error);
       });
   }, [getcookie, reTrigger, dispatch]);
   //Gets my COnversations
@@ -76,7 +74,7 @@ const Layout = (props) => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: `http://localhost:4000/chat/getmyconversations`,
+      url: `https://dateappeldate.herokuapp.com/chat/getmyconversations`,
     })
       .then((res) => {
         console.log(res);
@@ -84,8 +82,7 @@ const Layout = (props) => {
         dispatch({ type: "FETCH_MY_CONVERSATIONS", action: res.data });
       })
       .catch((error) => {
-        console.log(error.response.status); // 401
-        console.log(error.response.data);
+        console.log(error);
       });
   }, [dispatch, getcookie, reTrigger]);
   //
@@ -95,7 +92,7 @@ const Layout = (props) => {
       headers: { "Content-Type": "application/json" },
 
       withCredentials: true,
-      url: "http://localhost:4000/users/logout",
+      url: "https://dateappeldate.herokuapp.com/users/logout",
     }).then((res) => {
       console.log(res, "ko praq");
       if (res.status === 200) {
