@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel } from "antd";
 import "./Home.css";
+import { Link } from "react-router-dom";
 import LatestProfiles from "./LatestProfiles";
 import { RightCircleOutlined, HeartOutlined } from "@ant-design/icons"; // ANT
 const Home = () => {
@@ -37,7 +38,9 @@ const Home = () => {
       <div className="signUpNow">
         <h1>Join us now !</h1>
         <button>
-          <RightCircleOutlined /> Sign up{" "}
+          <Link to="./register">
+            <RightCircleOutlined /> Sign up{" "}
+          </Link>
         </button>
       </div>
       <div className="latestUsers">
