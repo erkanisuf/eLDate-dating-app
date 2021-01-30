@@ -134,7 +134,10 @@ const Myalbum = () => {
           marginBottom: "10px",
         }}
       >
-        <form onSubmit={changeProfileImage}>
+        <form
+          onSubmit={changeProfileImage}
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
           <input
             type="file"
             name="albumImage"
@@ -167,7 +170,7 @@ const Myalbum = () => {
                       flexDirection: "column",
                       alignItems: "center",
                       margin: "5px",
-                      width: 100,
+                      width: window.innerWidth <= 768 ? 95 : 100,
                     }}
                   >
                     <Image width={100} height={100} src={el} />{" "}

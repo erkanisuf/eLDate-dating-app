@@ -186,3 +186,29 @@
     transform: scale(1, 1);
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .cardContainer {
+    height: 300px;
+  }
+  .card {
+    height: 200px;
+  }
+  .infoText {
+    height: 18px;
+  }
+  .card h3 {
+    padding: 10px;
+  }
+
+  .startmatchAgain {
+    height: 40px;
+    font-size: 15px;
+  }
+  .infoText {
+    width: 100%;
+    height: 25px;
+
+    font-size: 13px;
+  }
+}

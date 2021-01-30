@@ -10,7 +10,7 @@ import {
   FacebookOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
-const Login = () => {
+const Login = ({ closeNav }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [form, setForm] = useState({ email: "", password: "" });
@@ -58,7 +58,13 @@ const Login = () => {
   };
 
   return (
-    <div style={{ width: "80%", textAlign: "left" }}>
+    <div
+      style={{
+        width: "80%",
+        textAlign: "left",
+        marginTop: window.innerWidth <= 768 ? "100px" : "",
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <label>
           Email:
@@ -105,13 +111,17 @@ const Login = () => {
         <div style={{ textAlign: "center" }}>
           <span className="register">
             {" "}
-            <Link to="/register" style={{ color: "black" }}>
+            <Link to="/register" style={{ color: "black" }} onClick={closeNav}>
               Register/
             </Link>
           </span>{" "}
           <span className="register">
             {" "}
-            <Link to="/forgotpassword" style={{ color: "black" }}>
+            <Link
+              to="/forgotpassword"
+              style={{ color: "black" }}
+              onClick={closeNav}
+            >
               Forgot Password?
             </Link>
           </span>

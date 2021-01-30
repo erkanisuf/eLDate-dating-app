@@ -62,3 +62,37 @@
   color: white;
   background-color: #74b7e4;
 }
+
+@media only screen and (max-width: 768px) {
+  .myGrid {
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .imageGridEl {
+    padding-top: 30px;
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  .descriptions {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    display: "flex";
+
+    flex-direction: column;
+  }
+  .buttonsBox {
+    grid-column: 1/2;
+
+    grid-row: 3/4;
+    margin: 15px auto;
+
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+}

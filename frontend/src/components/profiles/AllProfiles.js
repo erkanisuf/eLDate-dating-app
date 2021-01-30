@@ -11,6 +11,8 @@ const AllProfiles = () => {
   // Ant Design Meta
   const [allprofiles, setallProfiles] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [fetchBackProfiles, setfetchBackProfiles] = useState(false);
+  const [error, setError] = useState("");
   useEffect(() => {
     Axios({
       method: "GET",
@@ -26,7 +28,7 @@ const AllProfiles = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [isFiltered]);
+  }, [fetchBackProfiles]);
 
   const filterProfiles = (param) => {
     Axios({
@@ -40,14 +42,51 @@ const AllProfiles = () => {
         console.log(res);
         if (res.status === 200) {
           setIsFiltered(true);
+          if (!res.data.data.length) {
+            setError("No results found with this filter!");
+          }
+          setallProfiles(res.data.data);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const closeButtonAndReFetch = () => {
+    setfetchBackProfiles(!fetchBackProfiles);
+    setIsFiltered(false);
+  };
   if (!allprofiles.length) {
-    return <Spin size="large" />;
+    return (
+      <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            width: "100%",
+
+            marginBottom: "10px",
+            borderBottom: "1px solid #ccc",
+            paddingBottom: "5px",
+          }}
+        >
+          <Filters filterProfiles={filterProfiles} />
+          {isFiltered && (
+            <Button
+              style={{ marginLeft: "5px" }}
+              onClick={closeButtonAndReFetch}
+            >
+              {" "}
+              X Remove Filters
+            </Button>
+          )}
+        </div>
+        <Spin size="large" />
+        <span style={{ color: "red" }}>{error && error}</span>
+      </div>
+    );
   }
 
   return (
@@ -56,7 +95,7 @@ const AllProfiles = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "flex-start",
+          justifyContent: window.innerWidth <= 768 ? "flex-end" : "flex-start",
           width: "100%",
           marginBottom: "10px",
           borderBottom: "1px solid #ccc",
@@ -65,10 +104,7 @@ const AllProfiles = () => {
       >
         <Filters filterProfiles={filterProfiles} />
         {isFiltered && (
-          <Button
-            style={{ marginLeft: "5px" }}
-            onClick={() => setIsFiltered(false)}
-          >
+          <Button style={{ marginLeft: "5px" }} onClick={closeButtonAndReFetch}>
             {" "}
             X Remove Filters
           </Button>
@@ -96,11 +132,14 @@ const AllProfiles = () => {
               <Link to={`/allprofiles/${el.profile_id}`}>
                 <Card
                   hoverable
-                  style={{ width: 200, padding: "15px" }}
+                  style={{
+                    width: window.innerWidth <= 768 ? 150 : 200,
+                    padding: "15px",
+                  }}
                   cover={
                     <Avatar
                       style={{ border: "1px solid #003a8c" }}
-                      size={180}
+                      size={window.innerWidth <= 768 ? 120 : 180}
                       src={
                         el.images.length
                           ? el.images[0]
@@ -111,7 +150,11 @@ const AllProfiles = () => {
                 >
                   <Meta
                     title={
-                      <div>
+                      <div
+                        style={{
+                          fontSize: window.innerWidth <= 768 ? "12px" : "",
+                        }}
+                      >
                         {el.nickname ? el.nickname : el.fullname},
                         <p style={{ fontSize: "12px", color: "#ccc" }}>
                           {moment(el.age, "YYYYMMDD").fromNow(true)}

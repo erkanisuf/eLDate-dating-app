@@ -8,7 +8,7 @@ import {
   FireOutlined,
 } from "@ant-design/icons"; // ANT
 import { useDispatch, useSelector } from "react-redux"; //REDUX
-const Notifications = () => {
+const Notifications = ({ closeNav }) => {
   const dispatch = useDispatch(); // REDUX
   const msgNotifc = useSelector((state) => state.myNotifications); // REDUX
   const openID = useSelector((state) => state.conversationReducer);
@@ -32,7 +32,7 @@ const Notifications = () => {
   }, [dispatch, openID]);
   return (
     <div className="notifications">
-      <Link to="/mymatches">
+      <Link to="/mymatches" onClick={closeNav}>
         <Badge
           count={
             <AlertOutlined
@@ -48,7 +48,7 @@ const Notifications = () => {
           <FireOutlined style={{ fontSize: "40px" }} />
         </Badge>
       </Link>
-      <Link to="/mymessages">
+      <Link to="/mymessages" onClick={closeNav}>
         <Badge
           count={
             msgNotifc.messages.length ? (

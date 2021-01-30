@@ -59,7 +59,7 @@ const LatestProfiles = () => {
             <Link to={`/allprofiles/${el.profile_id}`}>
               <Avatar
                 style={{ border: "1px solid pink" }}
-                size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 80 }}
+                size={{ xs: 55, sm: 22, md: 32, lg: 44, xl: 50, xxl: 80 }}
                 src={el.images[0]}
                 alt={el.fullname}
               />

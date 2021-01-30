@@ -10,8 +10,8 @@ const Filters = ({ filterProfiles }) => {
     ageFrom: 18,
     ageTo: 30,
     heightFrom: 170,
-    heightTo: 180,
-    weightFrom: 75,
+    heightTo: 200,
+    weightFrom: 50,
     weightTo: 180,
   });
   const onChangeTheyAre = (e) => {
@@ -107,7 +107,7 @@ const Filters = ({ filterProfiles }) => {
             defaultValue={[filter.ageFrom, filter.ageTo]}
             onChange={onChangeAge}
           />
-          <p>Height Range(cm)</p>
+          <p>Height Range(cm) </p>
           <Slider
             max={200}
             min={150}

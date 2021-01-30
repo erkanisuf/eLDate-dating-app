@@ -93,3 +93,33 @@
   color: grey;
   font-weight: 400;
 }
+
+@media only screen and (max-width: 768px) {
+  .HomePageContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .contentStyle {
+    grid-column: 1;
+    text-align: center;
+    font-size: 15px;
+    line-height: 160px;
+  }
+  .contentStyle h1 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: -25px;
+  }
+  .contentStyle h5 {
+    font-size: 18px;
+    margin-left: -15px;
+  }
+  .carouselDIV {
+    grid-column: 1;
+  }
+  .latestUsers {
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
+  }
+}

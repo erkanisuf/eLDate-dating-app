@@ -124,7 +124,7 @@ const GetInsideMessages = ({
               <p
                 style={{
                   position: "relative",
-                  width: "25%",
+                  width: window.innerWidth <= 768 ? "70%" : "25%",
                   margin: "5px",
                   padding: "15px",
                   borderRadius: "10px",

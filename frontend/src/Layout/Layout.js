@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Layout.css";
 import Myprofile from "../components/user/Myprofile";
 import { Link } from "react-router-dom";
@@ -15,6 +15,8 @@ import {
   MessageOutlined,
   FireOutlined,
   UsergroupAddOutlined,
+  MenuOutlined,
+  CloseCircleOutlined,
 } from "@ant-design/icons";
 const Layout = (props) => {
   const getcookie = Number(Cookies.get("token"));
@@ -22,6 +24,7 @@ const Layout = (props) => {
   const isLoged = useSelector((state) => state.AmiLogged); // REDUX
   const reTrigger = useSelector((state) => state.toggleTriggerFetchs); // REDUX
   const history = useHistory(); // ROUTER
+  const [open, setOpen] = useState(false); //TOGGLE
 
   useEffect(() => {
     Axios({
@@ -111,23 +114,35 @@ const Layout = (props) => {
       }
     });
   };
+  const closeNav = () => {
+    setOpen(!open);
+  };
   return (
     <div className="LayoutBackgorund">
+      <div className="btnToggle" onClick={() => setOpen(!open)}>
+        {open ? <CloseCircleOutlined /> : <MenuOutlined />}
+      </div>
       <div className="transperantBackground">
-        <div className="leftMenu">
+        <div
+          className={"leftMenu"}
+          style={
+            window.innerWidth <= 768 ? { display: open ? "flex" : "none" } : {}
+          }
+        >
           {isLoged ? (
             <div>
               <Myprofile />
-              <Notifications />
+              <Notifications closeNav={closeNav} />
             </div>
           ) : (
-            <Login />
+            <Login closeNav={closeNav} />
           )}
 
           <div className="Menu">
             <nav>
               <ul className="navigator">
                 <Link
+                  onClick={() => setOpen(!open)}
                   style={{
                     color: "white",
                   }}
@@ -137,6 +152,7 @@ const Layout = (props) => {
                   Home
                 </Link>
                 <Link
+                  onClick={() => setOpen(!open)}
                   style={{
                     color: "white",
                   }}
@@ -146,6 +162,7 @@ const Layout = (props) => {
                   Profiles
                 </Link>
                 <Link
+                  onClick={() => setOpen(!open)}
                   style={{
                     color: "white",
                   }}
@@ -155,6 +172,7 @@ const Layout = (props) => {
                   Match
                 </Link>
                 <Link
+                  onClick={() => setOpen(!open)}
                   style={{
                     color: "white",
                   }}

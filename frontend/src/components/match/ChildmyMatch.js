@@ -50,7 +50,7 @@ const ChildmyMatch = ({ matchID }) => {
       style={{
         display: "flex",
         flexDirection: "row",
-        width: "80%",
+        width: window.innerWidth <= 768 ? "95%" : "80%",
         margin: "5px",
         border: "1px solid #ccc",
         padding: "15px",

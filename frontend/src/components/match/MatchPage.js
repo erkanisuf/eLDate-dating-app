@@ -145,7 +145,14 @@ function MatchPage() {
           </TinderCard>
         ))}
       </div>
-      <div style={{ width: "100%", margin: "50px auto", padding: "25px" }}>
+      <div
+        style={{
+          width: "100%",
+          margin: "50px auto",
+          padding: "25px",
+          marginTop: window.innerWidth <= 768 ? "80px" : "",
+        }}
+      >
         {lastDirection ? (
           lastDirection === "right" ? (
             <div>

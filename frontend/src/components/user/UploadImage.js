@@ -75,12 +75,13 @@ const UploadImage = () => {
         margin: "0 auto",
         width: "100%",
         display: "flex",
-        flexDirection: "row",
+        flexDirection: window.innerWidth <= 768 ? "column" : "row",
 
         justifyContent: "space-between",
         alignItems: "center",
         borderBottom: "1px solid #ccc",
         marginBottom: "25px",
+
         paddingBottom: "25px",
       }}
     >
@@ -102,6 +103,7 @@ const UploadImage = () => {
           alignItems: "center",
           display: "flex",
           flexDirection: "row",
+          marginTop: window.innerWidth <= 768 ? "25px" : "",
         }}
       >
         <input type="file" name="profileImage" onChange={onChangeImage} />

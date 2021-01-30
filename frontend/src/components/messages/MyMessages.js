@@ -3,6 +3,7 @@ import Axios from "axios";
 import GetInsideMessages from "./GetInsideMessages";
 import { useDispatch, useSelector } from "react-redux";
 import "antd/dist/antd.css";
+import "./MyMessages.css";
 //ANT DESIGN
 import { Tabs, Badge } from "antd";
 import { Avatar } from "antd";
@@ -79,11 +80,7 @@ const MyMessages = () => {
           return (
             <TabPane
               tab={
-                <div
-                  style={{
-                    width: "100%",
-                  }}
-                >
+                <div className="tabNames">
                   {msgNotifc.messages.filter(
                     (z) => z.conversation_id === el.conversation_id
                   ).length ? (
@@ -113,7 +110,7 @@ const MyMessages = () => {
                   )}
 
                   <Avatar
-                    size={75}
+                    size={window.innerWidth <= 768 ? 25 : 75}
                     style={{
                       margin: "5px",
 

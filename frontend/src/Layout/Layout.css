@@ -35,6 +35,7 @@
   padding: 25px;
   border-radius: 2rem;
 }
+
 .Menu {
   border-radius: 20px;
   background-color: #57a1f9;
@@ -147,4 +148,77 @@
   background-color: #57a1f9;
   background-image: linear-gradient(62deg, #57a1f9 0%, #e99af2 100%);
   border-radius: 100%;
+}
+
+.btnToggle {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  .LayoutBackgorund {
+    position: relative;
+  }
+  .btnToggle {
+    display: block;
+    position: fixed;
+    top: 12px;
+    width: 60px;
+    height: 60px;
+
+    border-radius: 100px;
+    left: 12px;
+    font-size: 38px;
+    color: rgb(255, 255, 255);
+    z-index: 5;
+    background-image: linear-gradient(62deg, #57a1f9 0%, #e99af2 100%);
+
+    text-align: center;
+  }
+  .leftMenu {
+    background-color: #e5c2e9;
+    display: none;
+    position: fixed;
+    justify-content: flex-start;
+    border-radius: 0;
+    z-index: 45;
+    width: 100%;
+    height: 100%;
+  }
+
+  .Menu {
+    padding: 10px 55px;
+  }
+
+  .navigator {
+    justify-content: space-evenly;
+  }
+
+  .rightMenu {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0px;
+    min-height: 100vh;
+  }
+  .transperantBackground {
+    border-radius: 0px;
+
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 770px) {
+  .rightMenu {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0px;
+    min-height: 100vh;
+  }
+  .transperantBackground {
+    border-radius: 0px;
+
+    height: 100%;
+    width: 100%;
+  }
 }

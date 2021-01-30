@@ -26,7 +26,7 @@ const MyMatches = () => {
         overflow: "hidden",
 
         display: "flex",
-        flexDirection: "row",
+        flexDirection: window.innerWidth <= 768 ? "column" : "row",
         flexWrap: "flex-wrap",
         justifyContent: "flex-start",
 
