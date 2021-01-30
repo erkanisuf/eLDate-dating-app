@@ -40,8 +40,9 @@ const sessionConfig = {
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     // maxAge: 15000,
+    httpOnly: false,
     aameSite: true,
-    secure: false, // ENABLE ONLY ON HTTPS
+    secure: true, // ENABLE ONLY ON HTTPS
   },
   unset: "destroy",
   proxy: true,
