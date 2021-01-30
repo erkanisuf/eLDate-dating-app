@@ -129,7 +129,7 @@ exports.getMyChat = async (req, res) => {
       INNER JOIN profile
       ON profile.userlog_id = messages.sender_id
       WHERE conversation_id=$1
-      ORDER BY created_at DESC`,
+      ORDER BY created_at ASC`,
       [id]
     );
     // const getAllmessagesofTHisChat = await pool.query(
