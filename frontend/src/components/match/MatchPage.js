@@ -127,7 +127,12 @@ function MatchPage() {
                 className="swipeLeft"
                 onClick={() => swipe("left", index)}
               >
-                <FrownOutlined style={{ fontSize: "50px", zIndex: 3 }} />
+                <FrownOutlined
+                  style={{
+                    fontSize: window.innerWidth <= 768 ? "15px" : "50px",
+                    zIndex: 3,
+                  }}
+                />
                 NOT
               </Button>
               <Button
@@ -135,7 +140,10 @@ function MatchPage() {
                 onClick={() => swipe("right", index)}
               >
                 <HeartTwoTone
-                  style={{ fontSize: "50px", zIndex: 3 }}
+                  style={{
+                    fontSize: window.innerWidth <= 768 ? "15px" : "50px",
+                    zIndex: 3,
+                  }}
                   spin={true}
                   twoToneColor="#f1bcd9"
                 />
