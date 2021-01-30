@@ -36,13 +36,15 @@ const sessionConfig = {
   name: "mysession",
   secret: process.env.COOKIE_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     // maxAge: 15000,
     aameSite: true,
-    secure: true, // ENABLE ONLY ON HTTPS
+    secure: false, // ENABLE ONLY ON HTTPS
   },
+  unset: "destroy",
+  proxy: true,
 };
 
 app.use(session(sessionConfig));
