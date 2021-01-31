@@ -189,6 +189,14 @@
 
 @media only screen and (max-width: 768px) {
   .buttons {
+    background-color: white;
+  }
+
+  .swipeRight {
+    display: none;
+  }
+
+  .swipeRight {
     display: none;
   }
   .infoText {

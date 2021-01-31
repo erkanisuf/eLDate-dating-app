@@ -58,7 +58,13 @@ const MyMessages = () => {
     return <h1> No conversations found yet..</h1>;
   }
   return (
-    <div style={{ width: "100%", margin: "0 auto" }}>
+    <div
+      style={{
+        width: "100%",
+        margin: "0 auto",
+        height: window.innerWidth <= 768 ? "80%" : "100%",
+      }}
+    >
       <Tabs
         onChange={handleOpen}
         defaultActiveKey={
