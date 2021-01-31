@@ -81,7 +81,13 @@ const MyMessages = () => {
           return (
             <TabPane
               tab={
-                <div className="tabNames">
+                <div
+                  className="tabNames"
+                  style={{
+                    height: window.innerWidth <= 768 ? "100px" : "",
+                    padding: "10px",
+                  }}
+                >
                   {msgNotifc.messages.filter(
                     (z) => z.conversation_id === el.conversation_id
                   ).length ? (
