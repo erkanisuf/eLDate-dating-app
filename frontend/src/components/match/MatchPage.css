@@ -188,6 +188,10 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .root {
+    height: 80%;
+    width: 80%;
+  }
   .cardContainer {
     height: 400px;
   }
