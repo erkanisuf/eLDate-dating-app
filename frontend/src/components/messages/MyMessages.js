@@ -64,11 +64,11 @@ const MyMessages = () => {
         defaultActiveKey={
           openID === null ? mymessages[0].conversation_id : `${openID}`
         }
-        tabPosition={"left"}
+        tabPosition={window.innerWidth <= 768 ? "top" : "left"}
         style={{
           margin: "0 auto",
           width: "100%",
-          height: "800px",
+          height: window.innerWidth <= 768 ? "100%" : "800px",
         }}
       >
         {mymessages.map((el, index) => {

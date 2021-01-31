@@ -188,11 +188,8 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .cardContainer {
-    height: 300px;
-  }
-  .card {
-    height: 200px;
+  .buttons {
+    display: none;
   }
   .infoText {
     height: 18px;
