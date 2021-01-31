@@ -211,7 +211,7 @@
 @media only screen and (max-width: 1024px) and (min-width: 770px) {
   .rightMenu {
     width: 100%;
-    height: 100%;
+    height: 80%;
 
     border-radius: 0px;
     min-height: 100vh;
