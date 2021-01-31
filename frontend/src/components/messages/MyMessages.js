@@ -62,7 +62,7 @@ const MyMessages = () => {
       style={{
         width: "100%",
         margin: "0 auto",
-        height: window.innerWidth <= 768 ? "70%" : "100%",
+        height: "100%",
       }}
     >
       <Tabs
@@ -74,7 +74,7 @@ const MyMessages = () => {
         style={{
           margin: "0 auto",
           width: "100%",
-          height: window.innerWidth <= 768 ? "700px" : "800px",
+          height: window.innerWidth <= 768 ? "80%" : "800px",
         }}
       >
         {mymessages.map((el, index) => {
